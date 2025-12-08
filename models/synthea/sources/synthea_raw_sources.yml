@@ -1,0 +1,13 @@
+version: 2
+
+sources:
+  - name: raw_data
+    database: SYNTHEA_RAW
+    schema: RAW_DATA
+    quoting:
+      database: true
+      schema: true
+      identifier: true
+    tables:
+      - name: MASTER_JSON
+

@@ -1,0 +1,11 @@
+    
+CREATE OR REPLACE TABLE synthea_raw.util.synthea_flattened_L2 AS
+select upper(table_name), upper(column_name), upper(col_data_type)   
+from 
+(select 
+    f.value:column::string  as column_name
+    , f.value:table::string  as table_name
+    , f.value:datatype::string as col_data_type
+from synthea_raw.raw_data.synthea_flattened_L1,
+        lateral flatten (input => col_meta) f)
+group by 1,2,3 order by 1,2,3;
