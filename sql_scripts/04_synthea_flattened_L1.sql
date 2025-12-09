@@ -9,7 +9,7 @@ I am also creating an array of  structure to store table, column, dataype for ea
 
 
 */
-CREATE OR REPLACE TEMP TABLE synthea_raw.raw_data.flattened_json AS  
+CREATE OR REPLACE TEMP TABLE synthea_raw.util.flattened_json AS  
     (SELECT  
             raw:entry[0].fullUrl::string as  patient_id
             , f.value:resource:resourceType as fkey
@@ -21,12 +21,12 @@ CREATE OR REPLACE TEMP TABLE synthea_raw.raw_data.flattened_json AS
             , lateral flatten (input => raw:entry)f
             , lateral flatten (input => fval)g); 
 
-CREATE OR REPLACE TEMP TABLE synthea_raw.raw_data.array_agg_flattened_json AS
+CREATE OR REPLACE TEMP TABLE synthea_raw.util.array_agg_flattened_json AS
     (SELECT 
             patient_id,fkey
-            ,CAST(ARRAY_AGG(fval) AS VARIANT) as fval from synthea_raw.raw_data.flattened_json  group by 1,2); 
+            ,CAST(ARRAY_AGG(fval) AS VARIANT) as fval from synthea_raw.util.flattened_json  group by 1,2); 
 
-create or replace temp table synthea_raw.raw_data.col_data_for_agg as 
+create or replace temp table synthea_raw.util.col_data_for_agg as 
 WITH 
 flat_L1 AS
     (SELECT  
@@ -58,7 +58,7 @@ flat_L2 AS
 SELECT * from flat_L1 union all select * from flat_l2
 ;
 
-CREATE OR REPLACE TEMP TABLE synthea_raw.raw_data.col_meta_json AS
+CREATE OR REPLACE TEMP TABLE synthea_raw.util.col_meta_json AS
 (
     SELECT patient_id, ARRAY_AGG(OBJECT_CONSTRUCT(
                 'table',  fkey,
@@ -72,7 +72,7 @@ CREATE OR REPLACE TEMP TABLE synthea_raw.raw_data.col_meta_json AS
             fkey,
             column_name,
             data_type_L1
-        FROM synthea_raw.raw_data.col_data_for_agg
+        FROM synthea_raw.util.col_data_for_agg
     ) d
     GROUP BY
         patient_id
@@ -87,7 +87,11 @@ CREATE OR REPLACE TABLE synthea_raw.util.synthea_flattened_L1 AS
         , ARRAY_AGG(a.fkey) as pat_tables
         , min(col_val) as col_meta
         , OBJECT_AGG(a.fkey,a.fval) as clinical_json
-    FROM synthea_raw.raw_data.array_agg_flattened_json a INNER JOIN synthea_raw.raw_data.col_meta_json c on a.patient_id = c.patient_id
+    FROM synthea_raw.util.array_agg_flattened_json a INNER JOIN synthea_raw.util.col_meta_json c on a.patient_id = c.patient_id
     GROUP BY  a.patient_id) ;
+
+
+select patient_id, pat_tables, col_meta from synthea_raw.util.synthea_flattened_L1;
+
 
 
