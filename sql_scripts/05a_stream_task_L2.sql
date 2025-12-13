@@ -6,15 +6,16 @@ CREATE OR REPLACE  TASK synthea_raw.util.task_synthea_flattened_L2
   WAREHOUSE = TRANSFORMING
   AFTER synthea_raw.util.task_synthea_flattened_L1
 AS
+BEGIN
 INSERT INTO synthea_raw.util.synthea_flattened_L2 (
     table_name,
     column_name,
     column_data_type
 )
 SELECT
-    UPPER(table_name)       AS table_name,
-    UPPER(column_name)      AS column_name,
-    UPPER(col_data_type)    AS column_data_type
+    table_name       AS table_name,
+    column_name      AS column_name,
+    col_data_type    AS column_data_type
 FROM (
     SELECT
         f.value:column::string   AS column_name,
@@ -26,6 +27,7 @@ FROM (
 GROUP BY 1,2,3
 ORDER BY 1,2,3;
 
+END;
 select * from synthea_raw.util.master_json_str;
 
 
