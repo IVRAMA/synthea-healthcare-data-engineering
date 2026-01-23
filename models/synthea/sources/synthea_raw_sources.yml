@@ -3,7 +3,7 @@ version: 2
 sources:
   - name: raw_data
     database: SYNTHEA_RAW
-    schema: RAW_DATA
+    schema: BRONZE_RAW
     quoting:
       database: true
       schema: true
