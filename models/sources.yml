@@ -1,0 +1,13 @@
+version: 2
+
+sources:
+  - name: clinical_data
+    database: HEALTHCARE_RAW     # Exact from debug
+    schema: CLINICAL_DATA        # Your 5 tables here
+    tables:
+      - name: encounters
+      - name: immunizations
+      - name: medications
+      - name: observations
+      - name: procedures
+        description: "Synthea CSV procedures data"

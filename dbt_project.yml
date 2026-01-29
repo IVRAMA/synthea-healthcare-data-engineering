@@ -4,10 +4,10 @@
 # name or the intended use of these models
 name: 'my_new_project'
 version: '1.0.0'
-config-version: 2
+
 
 # This setting configures which "profile" dbt uses for this project.
-profile: 'default'
+profile: 'my_new_project'   # ← Exact match
 
 # These configurations specify where dbt should look for different types of files.
 # The `model-paths` config, for example, states that models in this project can be
@@ -37,9 +37,6 @@ clean-targets:         # directories to be removed by `dbt clean`
 
 models:
   my_new_project:
-    synthea:
-      util:
-        +enabled: true
-        +database: SYNTHEA_RAW
-        +schema: UTIL
+    staging:
+      +schema: silver_stg
 
