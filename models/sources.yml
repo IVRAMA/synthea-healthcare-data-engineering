@@ -1,0 +1,18 @@
+sources:
+  - name: clinical_data
+    tables:
+      - name: encounters
+      - name: immunizations
+      - name: medications
+      - name: observations
+      - name: procedures
+      - name: json_encounters
+      - name: json_immunizations
+      - name: json_medications
+      - name: json_observations
+      - name: json_procedures
+  - name: synthea
+    database: HEALTHCARE_RAW
+    schema: DBT_BRONZE
+    tables:
+      - name: master_json
