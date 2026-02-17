@@ -1,13 +1,18 @@
-version: 2
-
 sources:
   - name: clinical_data
-    database: HEALTHCARE_RAW     # Exact from debug
-    schema: CLINICAL_DATA        # Your 5 tables here
     tables:
       - name: encounters
       - name: immunizations
       - name: medications
       - name: observations
       - name: procedures
-        description: "Synthea CSV procedures data"
+      - name: json_encounters
+      - name: json_immunizations
+      - name: json_medications
+      - name: json_observations
+      - name: json_procedures
+  - name: synthea
+    database: HEALTHCARE_RAW
+    schema: DBT_BRONZE
+    tables:
+      - name: master_json

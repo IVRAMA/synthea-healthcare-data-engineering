@@ -1,4 +1,9 @@
-{{ config(materialized='view') }}
+{{ config(
+    materialized='table',
+    database='HEALTHCARE_ANALYTICS',
+    schema='BRONZE', 
+    alias='stg_encounters'
+) }}
 
 WITH raw_encounters AS (
   SELECT * 
@@ -22,3 +27,5 @@ SELECT
   "REASONCODE",
   "REASONDESCRIPTION"
 FROM raw_encounters
+
+
