@@ -21,7 +21,7 @@ End-to-end dbt project transforming [Synthea](https://synthetichealth.github.io/
   - Healthcare-ready: Patient journeys via `encounter_id` hub.
 
 ## 🚀 Quick Start (Snowflake Trial)
-1. Clone: `git clone https://github.com/YOUR_USERNAME/synthea-dbt`
+1. Clone: `git clone https://github.com/IVRAMA/synthea-healthcare-data-engineering.git`
 2. Install: `pip install dbt-snowflake`
 3. Profiles: Edit `~/.dbt/profiles.yml` with Snowflake creds.
 4. Seeds: `dbt seed` (load Synthea CSVs).
@@ -35,7 +35,7 @@ End-to-end dbt project transforming [Synthea](https://synthetichealth.github.io/
 - Joins: `patient_id`, `encounter_id`, `start_date` (SCD2 history).[cite:11]
 
 ## 💼 Why This Project?
-Built for senior DE interviews: Privacy-safe healthcare ETL, dbt mastery, Snowflake optimization. Live demo: [Snowflake queries](queries/) + [dbt Cloud](link-if-any).
+Built for senior DE interviews : Privacy-safe healthcare ETL, dbt mastery, Snowflake optimization. Live demo: [Snowflake queries](queries/) + [dbt Cloud](link-if-any).
 
 ## Acknowledgments
 Inspired by [OHDSI dbt-synthea](https://github.com/OHDSI/dbt-synthea).[web:14][web:18]
