@@ -1,8 +1,5 @@
 {{ config (
-    materialized='incremental',
-    incremental_strategy='merge',
-    unique_key='Practitioner_id',
-    on_schema_change='append_new_columns',
+    materialized='table',
     database='HEALTHCARE_RAW',
     schema='DBT_SILVER', 
     alias='silver_Practitioner'

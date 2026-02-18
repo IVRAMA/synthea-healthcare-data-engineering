@@ -13,17 +13,17 @@ select
     , encounter_id as encounter_id
     , parse_json(code):"coding"[0]:"code"::varchar as CODE
     , parse_json(code):"coding"[0]:"display"::varchar as DESCRIPTION
-from  {{ ref('silver_Procedure') }}.dbt_silver.silver_procedure
+from  {{ ref('silver_Procedure') }}
 )
 , encounter as (
     select
-        id
+        ID
         , patient
         , REASONCODE
         , REASONDESCRIPTION
     from {{ ref('tfm_clinical_data__json_encounters') }})
 
-with raw_procedures AS (
+, raw_procedures AS (
 select
     distinct p."id"
     , "START"
@@ -36,7 +36,7 @@ select
     , REASONCODE
     , REASONDESCRIPTION
 from 
-     syn_procedure p inner join encounter e on p.encounter_id = e."id"}}
+     syn_procedure p inner join encounter e on p.encounter_id = e.ID
 )
 
 SELECT
@@ -46,6 +46,6 @@ TO_TIMESTAMP_NTZ("STOP") AS "STOP",
 "ENCOUNTER" AS "ENCOUNTER",
 "CODE" AS "CODE",
 "DESCRIPTION" AS "DESCRIPTION",
-TRY_TO_DOUBLE("BASE_COST") AS "BASE_COST",
+"BASE_COST",
 "REASONCODE" AS "REASONCODE",
 "REASONDESCRIPTION" AS "REASONDESCRIPTION" FROM raw_procedures

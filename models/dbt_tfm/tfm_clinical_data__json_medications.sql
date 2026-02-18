@@ -8,19 +8,20 @@
 
 WITH encounter as (
 select
-    "id"
-    , "START"
-    , "STOP"
+    ID
+    , "START_TIME"
+    , "STOP_TIME"
     , patient
     , ENCOUNTERCLASS
     , REASONCODE
     , REASONDESCRIPTION        
-    , encounter_id
-    , claim_provider
+    , ID as encounter_id
+    , "PROVIDER" as claim_provider
     , "CODE"
     , "DESCRIPTION"
     , TOTAL_CLAIM_COST
 from  {{ ref('tfm_clinical_data__json_encounters') }} a) 
+
 , medications as (
 select 
     medicationrequest_id as "id"
@@ -29,15 +30,14 @@ select
     , parse_json("MEDICATIONCODEABLECONCEPT"):"coding"[0]:"code"::varchar as CODE
     , parse_json("MEDICATIONCODEABLECONCEPT"):"coding"[0]:"display"::varchar as DESCRIPTION
 from {{ ref('silver_MedicationRequest') }})
-
-with raw_medications AS(
+, raw_medications AS(
     select
     DISTINCT m.ENCOUNTER 
-    , e."START"
-    , e."STOP"
+    , e."START_TIME" as "START" 
+    , e."STOP_TIME" as "STOP"
     , m.PATIENT
     , null as payer
-    , c.encounter_id
+    , encounter_id
     , m.CODE
     , M.DESCRIPTION
     , NULL AS BASE_COST
@@ -46,7 +46,7 @@ with raw_medications AS(
     , TOTAL_CLAIM_COST AS TOTALCOST
     , REASONCODE
     , REASONDESCRIPTION
-from encounter e inner join medications m on e."id"  = m.ENCOUNTER inner join claims c on e."id" = c.encounter_id }}
+from encounter e inner join medications m on e.ID  = m.ENCOUNTER
 )
 
 SELECT
@@ -57,9 +57,9 @@ TO_TIMESTAMP_NTZ("STOP") AS "STOP",
 "ENCOUNTER" AS "ENCOUNTER",
 TO_NUMBER("CODE") AS "CODE",
 "DESCRIPTION" AS "DESCRIPTION",
-TRY_TO_DOUBLE("BASE_COST") AS "BASE_COST",
-TRY_TO_DOUBLE("PAYER_COVERAGE") AS "PAYER_COVERAGE",
+"BASE_COST",
+"PAYER_COVERAGE",
 TO_NUMBER("DISPENSES") AS "DISPENSES",
-TRY_TO_DOUBLE("TOTALCOST") AS "TOTALCOST",
+"TOTALCOST",
 "REASONCODE" AS "REASONCODE",
 "REASONDESCRIPTION" AS "REASONDESCRIPTION" FROM raw_medications

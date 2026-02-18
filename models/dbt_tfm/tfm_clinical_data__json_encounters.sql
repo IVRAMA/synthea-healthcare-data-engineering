@@ -8,8 +8,8 @@
 WITH encounter as (
 select
     encounter_id as "id"
-    , a.encounter_start_dt as "START"
-    , a.encounter_end_dt  as "STOP"
+    , ENCOUNTER_START_DT as "START"
+    , ENCOUNTER_END_DT  as "STOP"
     , replace(patient_id::varchar,'urn:uuid:','') AS patient
     , DECODE(PARSE_JSON("CLASS"):"code", 'AMB', 'Ambulatory', 'EMER', 'Emergency', 'IMP', 'Inpatient') ENCOUNTERCLASS
     , PARSE_JSON("TYPE"):"coding"[0]:"code"::varchar as REASONCODE
@@ -26,8 +26,8 @@ from {{ ref('silver_Encounter') }})
 , raw_encounters AS (
 SELECT 
    distinct e."id" as ID
-    , e."START"
-    , e."STOP"
+    , e."START" as "START"
+    , e."STOP" as "STOP"
     , e.patient as PATIENT
     , claim_provider as ORGANIZATION
     , claim_provider as PROVIDER
@@ -35,9 +35,9 @@ SELECT
     , ENCOUNTERCLASS
     , c."CODE"
     , c."DESCRIPTION"
-    , null as BASE_ENCOUNTER_COST
+    , 0  as BASE_ENCOUNTER_COST
     , c.TOTAL_CLAIM_COST
-    , null as PAYER_COVERAGE
+    , 0 as PAYER_COVERAGE
     , e.REASONCODE
     , e.REASONDESCRIPTION
 FROM encounter e inner join  claims c on e."id" = c.encounter_id
@@ -54,9 +54,9 @@ SELECT
   "ENCOUNTERCLASS",
   TO_NUMBER("CODE")             AS "CODE",
   "DESCRIPTION",
-  TRY_TO_DOUBLE("BASE_ENCOUNTER_COST")  AS "BASE_ENCOUNTER_COST",
-  TRY_TO_DOUBLE("TOTAL_CLAIM_COST")     AS "TOTAL_CLAIM_COST",
-  TRY_TO_DOUBLE("PAYER_COVERAGE")       AS "PAYER_COVERAGE",
+  "BASE_ENCOUNTER_COST",
+  "TOTAL_CLAIM_COST",
+  "PAYER_COVERAGE",
   "REASONCODE",
   "REASONDESCRIPTION"
 FROM raw_encounters

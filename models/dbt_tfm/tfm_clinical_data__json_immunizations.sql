@@ -14,7 +14,7 @@ select
     , PARSE_JSON("VACCINECODE"):"coding"[0]:"code"::varchar as CODE
     , PARSE_JSON("VACCINECODE"):"coding"[0]:"display"::varchar as DESCRIPTION
     , 140.52::varchar as BASE_COST
-from {{ ref('silver_Immunization') }} }}
+from {{ ref('silver_Immunization') }}
 )
 
 SELECT
