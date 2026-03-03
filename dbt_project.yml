@@ -37,8 +37,12 @@ clean-targets:         # directories to be removed by `dbt clean`
 
 models:
   my_new_project:
-    bronze:
+    healthcare_csv:
       +database: HEALTHCARE_CSV_RAW
-      +schema: bronze
-      +materialized: table
+      bronze:
+        +schema: bronze
+        +materialized: table
+      silver:
+        +schema: silver
+        +materialized: table
 
