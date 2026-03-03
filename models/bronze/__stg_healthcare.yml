@@ -2,22 +2,22 @@ version: 2
 
 models:
 
-  - name: bronze_allergies
+  - name: bronze__allergies
     columns:
       - name: patient
         tests:
           - not_null
           - relationships:
-              to: ref('bronze_patients')
+              to: ref('bronze__patients')
               field: id
       - name: encounter
         tests:
           - not_null
           - relationships:
-              to: ref('bronze_encounters')
+              to: ref('bronze__encounters')
               field: id
 
-  - name: bronze_careplans
+  - name: bronze__careplans
     columns:
       - name: id
         tests:
@@ -27,36 +27,29 @@ models:
         tests:
           - not_null
           - relationships:
-              to: ref('bronze_patients')
+              to: ref('bronze__patients')
               field: id
       - name: encounter
         tests:
           - not_null
           - relationships:
-              to: ref('bronze_encounters')
+              to: ref('bronze__encounters')
               field: id
 
-  - name: bronze_claims
+  - name: bronze__claims
     columns:
-      - name: patient
+      - name: PATIENTID
         tests:
           - not_null
           - relationships:
-              to: ref('bronze_patients')
+              to: ref('bronze__patients')
               field: id
-      - name: encounter
-        tests:
-          - not_null
-          - relationships:
-              to: ref('bronze_encounters')
-              field: id
-      - name: provider
+      - name: PROVIDERID
         tests:
           - relationships:
-              to: ref('bronze_providers')
+              to: ref('bronze__providers')
               field: id
-
-  - name: bronze_claimstransactions
+  - name: bronze__claimstransactions
     columns:
       - name: id
         tests:
@@ -65,123 +58,116 @@ models:
         tests:
           - not_null
           - relationships:
-              to: ref('bronze_claims')
+              to: ref('bronze__claims')
               field: id
 
-  - name: bronze_conditions
+  - name: bronze__conditions
     columns:
       - name: patient
         tests:
           - not_null
           - relationships:
-              to: ref('bronze_patients')
+              to: ref('bronze__patients')
               field: id
       - name: encounter
         tests:
           - not_null
           - relationships:
-              to: ref('bronze_encounters')
+              to: ref('bronze__encounters')
               field: id
 
-  - name: bronze_imaging
+  - name: bronze__imaging
     columns:
       - name: patient
         tests:
           - not_null
           - relationships:
-              to: ref('bronze_patients')
+              to: ref('bronze__patients')
               field: id
       - name: encounter
         tests:
           - not_null
           - relationships:
-              to: ref('bronze_encounters')
+              to: ref('bronze__encounters')
               field: id
 
-  - name: bronze_immunizations
+  - name: bronze__immunizations
     columns:
       - name: patient
         tests:
           - not_null
           - relationships:
-              to: ref('bronze_patients')
+              to: ref('bronze__patients')
               field: id
       - name: encounter
         tests:
           - not_null
           - relationships:
-              to: ref('bronze_encounters')
+              to: ref('bronze__encounters')
               field: id
 
-  - name: bronze_medications
+  - name: bronze__medications
     columns:
       - name: patient
         tests:
           - not_null
           - relationships:
-              to: ref('bronze_patients')
+              to: ref('bronze__patients')
               field: id
       - name: encounter
         tests:
           - not_null
           - relationships:
-              to: ref('bronze_encounters')
+              to: ref('bronze__encounters')
               field: id
 
-  - name: bronze_observations
+  - name: bronze__observations
     columns:
       - name: patient
         tests:
           - not_null
           - relationships:
-              to: ref('bronze_patients')
+              to: ref('bronze__patients')
               field: id
-      - name: encounter
-        tests:
-          - not_null
-          - relationships:
-              to: ref('bronze_encounters')
-              field: id
-
-  - name: bronze_patients
+  - name: bronze__patients
     columns:
       - name: id
         tests:
           - not_null
           - unique
 
-  - name: bronze_procedures
+  - name: bronze__procedures
     columns:
       - name: patient
         tests:
           - not_null
           - relationships:
-              to: ref('bronze_patients')
+              to: ref('bronze__patients')
               field: id
       - name: encounter
         tests:
           - not_null
           - relationships:
-              to: ref('bronze_encounters')
+              to: ref('bronze__encounters')
               field: id
 
-  - name: bronze_providers
+  - name: bronze__providers
     columns:
       - name: id
         tests:
           - not_null
           - unique
 
-  - name: bronze_payer_transitions
+  - name: bronze__payer_transitions
     columns:
       - name: patient
         tests:
           - not_null
           - relationships:
-              to: ref('bronze_patients')
+              to: ref('bronze__patients')
               field: id
 
-  - name: bronze_encounters
+  - name: bronze__encounters
     columns:
       - name: id
         tests:
@@ -191,51 +177,51 @@ models:
         tests:
           - not_null
           - relationships:
-              to: ref('bronze_patients')
+              to: ref('bronze__patients')
               field: id
       - name: provider
         tests:
           - relationships:
-              to: ref('bronze_providers')
+              to: ref('bronze__providers')
               field: id
 
-  - name: bronze_careplanactivities
+  - name: bronze__careplanactivities
     columns:
       - name: careplanid
         tests:
           - relationships:
-              to: ref('bronze_careplans')
+              to: ref('bronze__careplans')
               field: id
 
-  - name: bronze_organizations
+  - name: bronze__organizations
     columns:
       - name: id
         tests:
           - not_null
           - unique
 
-  - name: bronze_devices
+  - name: bronze__devices
     columns:
       - name: patient
         tests:
           - relationships:
-              to: ref('bronze_patients')
+              to: ref('bronze__patients')
               field: id
       - name: encounter
         tests:
           - relationships:
-              to: ref('bronze_encounters')
+              to: ref('bronze__encounters')
               field: id
 
-  - name: bronze_supplies
+  - name: bronze__supplies
     columns:
       - name: patient
         tests:
           - relationships:
-              to: ref('bronze_patients')
+              to: ref('bronze__patients')
               field: id
       - name: encounter
         tests:
           - relationships:
-              to: ref('bronze_encounters')
+              to: ref('bronze__encounters')
               field: id

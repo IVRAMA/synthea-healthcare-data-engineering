@@ -1,7 +1,7 @@
 {{ config(materialized='table') }}
 
 with source as (
-    select * from {{ source('raw_data', 'organizations') }}
+    select * from {{ source('csv_data', 'organizations') }}
 )
 
 select

@@ -1,7 +1,7 @@
 {{ config(materialized='table') }}
 
 with source as (
-    select * from {{ source('raw_data', 'immunizations') }}
+    select * from {{ source('csv_data', 'immunizations') }}
 )
 
 select

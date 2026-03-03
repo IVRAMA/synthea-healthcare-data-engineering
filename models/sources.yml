@@ -1,0 +1,24 @@
+sources:
+  - name: csv_data
+    database: HEALTHCARE_CSV_RAW
+    schema: BRONZE
+    tables:
+      - name: allergies
+      - name: careplans
+      - name: claims
+      - name: claims_transactions
+      - name: conditions
+      - name: devices
+      - name: encounters
+      - name: imaging_studies
+      - name: immunizations
+      - name: medications
+      - name: observations
+      - name: organizations
+      - name: patients
+      - name: payer_transitions
+      - name: payers
+      - name: procedures
+      - name: providers
+      - name: supplies
+      - name: table_column_preview
