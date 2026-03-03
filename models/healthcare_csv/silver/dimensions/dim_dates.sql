@@ -1,8 +1,4 @@
-{{ config(
-    materialized='table',
-    database='HEALTHCARE_ANALYTICS',
-    schema='SILVER'
-) }}
+{{ config(materialized='table') }}
 
 with base as (
     -- Generate 10 years of daily dates using a generator

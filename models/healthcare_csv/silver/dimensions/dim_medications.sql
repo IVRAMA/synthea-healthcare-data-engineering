@@ -1,12 +1,8 @@
-{{ config(
-    materialized='table',
-    database='HEALTHCARE_ANALYTICS',
-    schema='SILVER'
-) }}
+{{ config(materialized='table') }}
 
 select distinct
     med.code as medication_code,
     med.description,
     med.REASONCODE,
     med.REASONDESCRIPTION
-from {{ ref('stg_clinical_data__medications') }} as med
+from {{ ref('stg_raw_data__medications') }} as med
