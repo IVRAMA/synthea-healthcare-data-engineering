@@ -57,9 +57,6 @@
 
 ⏳ Python 100k → clinical tables → dbt
 
-text
-
----
 
 ## 2. Architecture & Data Flow
 
@@ -71,7 +68,6 @@ dbt healthcare_csv/bronze → silver/dims&facts → gold/summaries
 ↓ (future)
 JSON SPs/Python → unified silver → star schema marts
 
-text
 
 **Source-Specific Bronze** | **Unified Silver/Gold**:
 
@@ -80,9 +76,6 @@ models/
 ├── silver/ # dim_patient (CSV+JSON)
 └── gold/ # encounter_summary
 
-text
-
----
 
 ## 3. Four Pipeline Models
 
@@ -93,7 +86,6 @@ text
 | **dbt JSON** | Native flattening | ⏳ | Clinical | Full stack |
 | **Python** | 100k patients flattened | ⏳ | Clinical | Marts |
 
----
 
 ## 4. CSV External Stages (✅ LIVE)
 
