@@ -1,0 +1,218 @@
+version: 2
+
+models:
+
+  - name: csv_bronze__allergies
+    columns:
+      - name: patient
+        tests:
+          - not_null
+          - relationships:
+              to: ref('csv_bronze__patients')
+              field: id
+      - name: encounter
+        tests:
+          - not_null
+          - relationships:
+              to: ref('csv_bronze__encounters')
+              field: id
+
+  - name: csv_bronze__careplans
+    columns:
+      - name: id
+        tests:
+          - not_null
+          - unique
+      - name: patient
+        tests:
+          - not_null
+          - relationships:
+              to: ref('csv_bronze__patients')
+              field: id
+      - name: encounter
+        tests:
+          - not_null
+          - relationships:
+              to: ref('csv_bronze__encounters')
+              field: id
+
+  - name: bronze__claims
+    columns:
+      - name: PATIENTID
+        tests:
+          - not_null
+          - relationships:
+              to: ref('csv_bronze__patients')
+              field: id
+      - name: PROVIDERID
+        tests:
+          - relationships:
+              to: ref('csv_bronze__providers')
+              field: id
+  - name: csv_bronze__claims_transactions
+    columns:
+      - name: id
+        tests:
+          - not_null
+      - name: claimid
+        tests:
+          - not_null
+          - relationships:
+              to: ref('csv_bronze__claims')
+              field: id
+
+  - name: csv_bronze__conditions
+    columns:
+      - name: patient
+        tests:
+          - not_null
+          - relationships:
+              to: ref('csv_bronze__patients')
+              field: id
+      - name: encounter
+        tests:
+          - not_null
+          - relationships:
+              to: ref('csv_bronze__encounters')
+              field: id
+
+  - name: csv_bronze__imaging_studies
+    columns:
+      - name: patient
+        tests:
+          - not_null
+          - relationships:
+              to: ref('csv_bronze__patients')
+              field: id
+      - name: encounter
+        tests:
+          - not_null
+          - relationships:
+              to: ref('csv_bronze__encounters')
+              field: id
+
+  - name: csv_bronze__immunizations
+    columns:
+      - name: patient
+        tests:
+          - not_null
+          - relationships:
+              to: ref('csv_bronze__patients')
+              field: id
+      - name: encounter
+        tests:
+          - not_null
+          - relationships:
+              to: ref('csv_bronze__encounters')
+              field: id
+
+  - name: csv_bronze__medications
+    columns:
+      - name: patient
+        tests:
+          - not_null
+          - relationships:
+              to: ref('csv_bronze__patients')
+              field: id
+      - name: encounter
+        tests:
+          - not_null
+          - relationships:
+              to: ref('csv_bronze__encounters')
+              field: id
+
+  - name: csv_bronze__observations
+    columns:
+      - name: patient
+        tests:
+          - not_null
+          - relationships:
+              to: ref('csv_bronze__patients')
+              field: id
+  - name: csv_bronze__patients
+    columns:
+      - name: id
+        tests:
+          - not_null
+          - unique
+
+  - name: csv_bronze__procedures
+    columns:
+      - name: patient
+        tests:
+          - not_null
+          - relationships:
+              to: ref('csv_bronze__patients')
+              field: id
+      - name: encounter
+        tests:
+          - not_null
+          - relationships:
+              to: ref('csv_bronze__encounters')
+              field: id
+
+  - name: csv_bronze__providers
+    columns:
+      - name: id
+        tests:
+          - not_null
+          - unique
+
+  - name: csv_bronze__payer_transitions
+    columns:
+      - name: patient
+        tests:
+          - not_null
+          - relationships:
+              to: ref('csv_bronze__patients')
+              field: id
+
+  - name: csv_bronze__encounters
+    columns:
+      - name: id
+        tests:
+          - not_null
+          - unique
+      - name: patient
+        tests:
+          - not_null
+          - relationships:
+              to: ref('csv_bronze__patients')
+              field: id
+      - name: provider
+        tests:
+          - relationships:
+              to: ref('csv_bronze__providers')
+              field: id
+  - name: csv_bronze__organizations
+    columns:
+      - name: id
+        tests:
+          - not_null
+          - unique
+
+  - name: csv_bronze__devices
+    columns:
+      - name: patient
+        tests:
+          - relationships:
+              to: ref('csv_bronze__patients')
+              field: id
+      - name: csv_encounter
+        tests:
+          - relationships:
+              to: ref('csv_bronze__encounters')
+              field: id
+
+  - name: csv_bronze__supplies
+    columns:
+      - name: patient
+        tests:
+          - relationships:
+              to: ref('csv_bronze__patients')
+              field: id
+      - name: encounter
+        tests:
+          - relationships:
+              to: ref('csv_bronze__encounters')
+              field: id
