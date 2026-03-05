@@ -1,0 +1,24 @@
+USE ROLE transform_role;
+USE WAREHOUSE TRANSFORMING;
+USE DATABASE HEALTHCARE_CSV_RAW;
+USE SCHEMA HEALTHCARE_CSV_RAW.BRONZE;
+
+
+COPY INTO allergies FROM @stage_allergies ON_ERROR = 'CONTINUE';
+COPY INTO careplans FROM @stage_careplans ON_ERROR = 'CONTINUE';
+COPY INTO claims FROM @stage_claims ON_ERROR = 'CONTINUE';
+COPY INTO claims_transactions FROM @stage_claims_transactions ON_ERROR = 'CONTINUE';
+COPY INTO conditions FROM @stage_conditions ON_ERROR = 'CONTINUE';
+COPY INTO devices FROM @stage_devices ON_ERROR = 'CONTINUE';
+COPY INTO encounters FROM @stage_encounters ON_ERROR = 'CONTINUE';
+COPY INTO imaging_studies FROM @stage_imaging_studies ON_ERROR = 'CONTINUE';
+COPY INTO immunizations FROM @stage_immunizations ON_ERROR = 'CONTINUE';
+COPY INTO medications FROM @stage_medications ON_ERROR = 'CONTINUE';
+COPY INTO observations FROM @stage_observations ON_ERROR = 'CONTINUE';
+COPY INTO organizations FROM @stage_organizations ON_ERROR = 'CONTINUE';
+COPY INTO patients FROM @stage_patients ON_ERROR = 'CONTINUE';
+COPY INTO payer_transitions FROM @stage_payer_transitions ON_ERROR = 'CONTINUE';
+COPY INTO payers FROM @stage_payers ON_ERROR = 'CONTINUE';
+COPY INTO procedures FROM @stage_procedures ON_ERROR = 'CONTINUE';
+COPY INTO providers FROM @stage_providers ON_ERROR = 'CONTINUE';
+COPY INTO supplies FROM @stage_supplies ON_ERROR = 'CONTINUE';
