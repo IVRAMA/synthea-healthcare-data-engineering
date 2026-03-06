@@ -18,9 +18,9 @@
 ## Table of Contents
 
 1. Project Overview
-2. Architecture & Data Flow
-3. Three Pipeline Models
-4. Stored Procedures (SP Pipeline)
+2. Mermaid Architecture & Data Flow
+3. Detailed Layer Implementation ← NEW (above tree)
+4.  4 Pipeline Strategies
 5. Data Sources
 6. Quick Start Guide
 7. STAR Story (Interview Ready)
@@ -45,8 +45,7 @@ This dbt project demonstrates end-to-end healthcare analytics pipelines, evolvin
 **Lineage**: [View DAG](images/lineage.png) – JSON batches → gold summaries across all pipelines.
 
 ## 2. Architecture & Data Flow
-
-### Medallion Architecture
+### Hybrid Medallion and Staging Transformation Architecture
 
 ``` mermaid
 graph TD
@@ -103,4 +102,32 @@ graph TD
     class CSV_B,JSON_B,DBT_B,PY_B bronze
     class MODEL silver
     class SUMMARY gold
+```
+
+## 3.  Detailed Layer Implementation
+```
+STAGING (JSON Raw Ingestion)
+├─ healthcare_json_raw.master_json (JSON batches via external stages)
+├─ healthcare_sfk_raw.Synthea_Flattened_L1: Flattened variant columns (patient-level JSON)
+├─ healthcare_sfk_raw.Synthea_Flattened_L2: Metadata extraction (table_name, column_name, data_type)
+├─ healthcare_dbt_raw.Synthea_Flattened_L1: Flattened variant columns (patient-level JSON)
+└─ healthcare_dbt_raw.Synthea_Flattened_L2: Metadata extraction (table_name, column_name, data_type)
+↓
+BRONZE (Raw Ingestion)
+├─ healthcare_csv_raw.(patients, encounters, claims, allergies, etc.)
+├─ healthcare_sfk_raw.(patients, encounters, claims, allergies, etc.)
+├─ healthcare_dbt_raw.(patients, encounters, claims, allergies, etc.)
+└─ healthcare_pyt_raw.(patients, encounters, claims, allergies, etc.)
+
+↓
+SILVER (Cleaned/Conformed/combined data)
+├─ dim_patients
+├─ dim_dates
+├─ dim_medications
+├─ dim_encounter
+├─ fact_medications
+└─ fact_procedures
+↓
+GOLD (Analytics Marts)
+└─  encounter_summary
 ```
