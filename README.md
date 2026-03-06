@@ -56,22 +56,29 @@ graph TD
         PYTHON[Python Script<br/>100k Patients Direct]
     end
 
-    subgraph STAGING["STAGING / TRANSFORM"]
-        CSV_STG[staging.csv_clinical<br/>External Stages]
+    subgraph STAGING["STAGING"]
+        CSV_STG[staging.csv_stages<br/>External + COPY]
         JSON_RAW[staging.master_json]
-        L1[L1: Explode<br/>transformation.L1_json]
-        L2[L2: Normalize<br/>transformation.L2_json]
+        L1[staging.L1_json<br/>Explode arrays]
+        L2[staging.L2_json<br/>Normalize]
     end
 
     subgraph BRONZE["BRONZE - Clinical Raw<br/>17 Tables Each"]
-        CSV_B[bronze.csv_clinical_*<br/>patients, encounters...]
+        CSV_B[bronze.csv_clinical_*]
         JSON_B[bronze.sf_json_clinical_*]
         DBT_B[bronze.dbt_json_clinical_*]
         PY_B[bronze.python_clinical_*]
     end
 
-    subgraph SILVER["SILVER - Modeled"]
-        MODEL[UNION All Sources<br/>silver.dims + facts<br/>Business logic]
+    subgraph SILVER_VIEWS["SILVER Views<br/>Source-Specific stg_*"]
+        CSV_STG_V[stg_csv_patients<br/>VIEW from csv bronze]
+        JSON_STG_V[stg_sf_patients<br/>VIEW from sf_json bronze]
+        DBT_STG_V[stg_dbt_patients<br/>VIEW from dbt bronze]
+        PY_STG_V[stg_python_patients<br/>VIEW from python bronze]
+    end
+
+    subgraph SILVER["SILVER Tables<br/>Unified Modeling"]
+        MODEL[dim_patient, fact_encounter<br/>TABLES<br/>UNION stg_* + SCD]
     end
 
     subgraph GOLD["GOLD"]
@@ -79,27 +86,29 @@ graph TD
     end
 
     %% Flows
-    CSV --> CSV_STG --> CSV_B
-    JSON_SF --> JSON_RAW --> L1 --> L2 --> JSON_B
-    DBT_JSON --> DBT_B
-    PYTHON --> PY_B
+    CSV --> CSV_STG --> CSV_B --> CSV_STG_V
+    JSON_SF --> JSON_RAW --> L1 --> L2 --> JSON_B --> JSON_STG_V
+    DBT_JSON --> DBT_B --> DBT_STG_V
+    PYTHON --> PY_B --> PY_STG_V
     
-    CSV_B -.-> MODEL
-    JSON_B -.-> MODEL
-    DBT_B -.-> MODEL
-    PY_B -.-> MODEL
+    CSV_STG_V -.-> MODEL
+    JSON_STG_V -.-> MODEL
+    DBT_STG_V -.-> MODEL
+    PY_STG_V -.-> MODEL
     
     MODEL --> SUMMARY
 
     classDef source fill:#ffeaa7
     classDef staging fill:#fdcb6e
     classDef bronze fill:#00b894
+    classDef silver_view fill:#74b9ff
     classDef silver fill:#0984e3
     classDef gold fill:#e17055
 
     class CSV,JSON_SF,DBT_JSON,PYTHON source
     class CSV_STG,JSON_RAW,L1,L2 staging
     class CSV_B,JSON_B,DBT_B,PY_B bronze
+    class CSV_STG_V,JSON_STG_V,DBT_STG_V,PY_STG_V silver_view
     class MODEL silver
     class SUMMARY gold
 ```
