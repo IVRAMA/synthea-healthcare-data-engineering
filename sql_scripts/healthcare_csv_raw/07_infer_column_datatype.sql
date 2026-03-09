@@ -48,9 +48,4 @@ FROM TABLE_COLUMN_PREVIEW
 QUALIFY ROW_NUMBER() OVER (PARTITION BY table_name, column_name ORDER BY ordinal_position) = 1
 ORDER BY table_name, ordinal_position;
 
-select replace(listagg(sql_script),', );',');\n') as final_script from (select table_name, 'CREATE OR REPLACE TABLE HEALTHCARE_CSV_RAW.BRONZE.' || table_name || '(' || listagg('"' || column_name || '" ' || INFERRED_DATATYPE || ', ') within group (order by ordinal_position) || ');' as sql_script FROM HEALTHCARE_RAW.UTIL.INFERRED_COLUMN_TYPES group by table_name);
-
-
-select * from HEALTHCARE_RAW.UTIL.INFERRED_COLUMN_TYPES;
-
 update HEALTHCARE_CSV_RAW.BRONZE.INFERRED_COLUMN_TYPES set column_name = concat('"',column_name,'"');
