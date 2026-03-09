@@ -1,20 +1,6 @@
--- save this in the snowsql config file in user profile
-[connections.HEALTHCARE_CSV_RAW]
-account = "QFHGXIH-EK76256"
-user = "HEALTHCARE"
-password = "Healthcare_User123"
-host = "QFHGXIH-EK76256.snowflakecomputing.com"
-region = "AWS_AP_SOUTHEAST_1"
-database = "HEALTHCARE_CSV_RAW"
-schema = "BRONZE"
-warehouse = "TRANSFORMING"
-role = "TRANSFORM"
-authenticator = "SNOWFLAKE"
-
 snowsql --connection=HEALTHCARE_CSV_RAW
 
 
--- AFTER ABOVE COMMAND IN PROMPT WE CAN INSERTA DATA TO THE STAGES. 
 
 PUT file://C:/dbt_projects/healthcare_db/csvs/allergies.csv  @HEALTHCARE_CSV_RAW.BRONZE.stage_allergies AUTO_COMPRESS=TRUE;
 
