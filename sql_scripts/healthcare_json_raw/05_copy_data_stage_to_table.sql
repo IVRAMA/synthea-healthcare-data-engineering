@@ -12,3 +12,8 @@ FROM (
 )
 FILE_FORMAT = (TYPE = JSON)
 ON_ERROR = 'CONTINUE';
+
+update MASTER_JSON set batch_seq  = (select max(batch_seq) +1  from MASTER_JSON) 
+where batch_seq = 0;
+
+update MASTER_JSON set batch_no   = 'Batch-00' where batch_no is null;

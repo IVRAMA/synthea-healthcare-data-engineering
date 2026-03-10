@@ -43,3 +43,7 @@ GRANT ROLE transform_role TO USER THERAMCHU;
 
 -- Core Privs (transform_role creates everything from here)
 GRANT CREATE DATABASE, CREATE WAREHOUSE ON ACCOUNT TO ROLE transform_role;
+
+GRANT EXECUTE MANAGED TASK ON ACCOUNT TO ROLE transform_role;
+
+GRANT EXECUTE TASK ON ACCOUNT TO ROLE transform_role;

@@ -270,7 +270,7 @@ BEGIN
        CURRENT_TIMESTAMP() AS audit_ts
 FROM information_schema.tables t
   WHERE t.table_schema IN ('BRONZE','SILVER_UTIL','SILVER') 
-    AND t.table_catalog = 'HEALTHCARE_RAW'  AND TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME <> 'PIPELINE_AUDIT'
+    AND t.table_catalog = 'HEALTHCARE_JSON_RAW'  AND TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME <> 'PIPELINE_AUDIT'
   ORDER BY t.LAST_DDL DESC;
 
   LET table_rs RESULTSET := (
