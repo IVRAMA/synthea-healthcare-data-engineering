@@ -1,0 +1,48 @@
+* SnowSQL * v1.4.5
+Type SQL statements or !help
++----------------------------------+
+| status                           |
+|----------------------------------|
+| Statement executed successfully. |
++----------------------------------+
+1 Row(s) produced. Time Elapsed: 0.111s
++----------------------------------+
+| status                           |
+|----------------------------------|
+| Statement executed successfully. |
++----------------------------------+
+1 Row(s) produced. Time Elapsed: 0.107s
++---------------------------------------------------------+
+| status                                                  |
+|---------------------------------------------------------|
+| HEALTHCARE_CSV_RAW already exists, statement succeeded. |
++---------------------------------------------------------+
+1 Row(s) produced. Time Elapsed: 0.078s
++---------------------------------------------------------------+
+| status                                                        |
+|---------------------------------------------------------------|
+| HEALTHCARE_ANALYTICS_NEW already exists, statement succeeded. |
++---------------------------------------------------------------+
+1 Row(s) produced. Time Elapsed: 0.090s
++-------------------------------------------+
+| status                                    |
+|-------------------------------------------|
+| _RAW already exists, statement succeeded. |
++-------------------------------------------+
+1 Row(s) produced. Time Elapsed: 0.084s
++---------------------------------------------+
+| status                                      |
+|---------------------------------------------|
+| PUBLIC already exists, statement succeeded. |
++---------------------------------------------+
+1 Row(s) produced. Time Elapsed: 0.424s
+
+Goodbye!
+
+STDERR:
+002002 (42710): SQL compilation error:
+Object 'HEALTHCARE_CSV_RAW.BRONZE' already exists.
+002002 (42710): SQL compilation error:
+Object 'HEALTHCARE_ANALYTICS_NEW.SILVER' already exists.
+002002 (42710): SQL compilation error:
+Object 'HEALTHCARE_ANALYTICS_NEW.GOLD' already exists.
