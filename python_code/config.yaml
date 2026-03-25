@@ -1,0 +1,14 @@
+account_role: transform_role
+wh: TRANSFORMING
+db_csv: HCB    # HCB later
+schema_csv: BRONZE
+db_json: HJB
+schema_staging: STAGING       # MASTER_JSON etc.
+schema_bronze: BRONZE         # Clinical tables
+paths:
+  shared_scripts: "C:\\dbt_projects\\healthcare_db\\scripts\\shared_scripts"
+  csv_scripts: "C:\\dbt_projects\\healthcare_db\\scripts\\csv_scripts"
+  json_scripts: "C:\\dbt_projects\\healthcare_db\\scripts\\json_scripts"
+  csv_dir: "C:\\dbt_projects\\healthcare_db\\csvs\\"
+  csv_logs: "C:\\dbt_projects\\healthcare_db\\logs\\csv_logs"
+  json_logs: "C:\\dbt_projects\\healthcare_db\\logs\\json_logs"

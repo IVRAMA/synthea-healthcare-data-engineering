@@ -1,0 +1,25 @@
+pipelines:
+  shared:
+    connection: "ACCOUNT_ROLE_CONN"
+    dbname: null
+    schemaname: null
+    script_dir: "shared_scripts"
+    sql_files: ["00_create_databases.sql"]
+  csv:
+    connection: "HEALTHCARE_CSV_RAW"
+    dbname: "HCB"  
+    schemaname: "BRONZE"
+    script_dir: "csv_scripts"
+    sql_files: ["02_Create_stages.sql","03_snowsql_put_commands.sql","04_Create_tables.sql","05_Copy_data_stage_to_table.sql","06_Stored_procedure_for_Meta_Data.sql","07_infer_column_datatype.sql"]
+  json_staging:
+    connection: "HEALTHCARE_JSON_RAW"
+    dbname: "HJB"
+    schemaname: "STAGING"
+    script_dir: "json_scripts"
+    sql_files: ["02_Create_stages.sql","03_snowsql_put_commands.sql","04_Create_tables.sql","05_Copy_data_stage_to_table.sql","06_stored_procedure_for_Meta_Data.sql","06a_metadata_staging_sp.sql","07_Create_snowflake_tasks.sql","08_execute_snowflake_tasks.sql"]
+  json_bronze:
+    connection: "HEALTHCARE_JSON_BRONZE" 
+    dbname: "HJB"
+    schemaname: "BRONZE"
+    script_dir: "json_scripts"
+    sql_files: ["06a_metadata_staging_sp.sql", "07_Create_snowflake_tasks.sql", "08_execute_snowflake_tasks.sql"]
