@@ -1,5 +1,3 @@
-{{ config(materialized='table') }}
-
 WITH silver_data as (
 select
 "ID"
@@ -25,7 +23,7 @@ select
     , "ZIP"
     , "HEALTHCARE_EXPENSES"
     , "HEALTHCARE_COVERAGE"
-from {{ ref('csv_silver__patients') }}
+from {{ ref('csv_bronze__patients') }}
 )
 
 select * from silver_data
