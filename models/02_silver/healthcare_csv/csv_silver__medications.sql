@@ -1,5 +1,3 @@
-{{ config(materialized='table') }}
-
 WITH silver_data as (
 
 select distinct
@@ -7,6 +5,6 @@ select distinct
     med.description,
     med.REASONCODE,
     med.REASONDESCRIPTION
-from {{ ref('csv_silver__medications') }} as med)
+from {{ ref('csv_bronze__medications') }} as med)
 
 select * from silver_data

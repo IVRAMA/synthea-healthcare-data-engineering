@@ -1,4 +1,3 @@
-{{ config(materialized='table') }}
 
 WITH silver_data as (
 select distinct
@@ -9,7 +8,6 @@ select distinct
     , "CODE" as  device_code
     , "DESCRIPTION" as  device_description
     , "UDI" as  device_udi
-from {{ ref('csv_silver__devices') }})
+from {{ ref('csv_bronze__devices') }})
 
 select * from silver_data
-

@@ -1,4 +1,3 @@
-{{ config(materialized='table') }}
 WITH silver_data as (
 select
     id as organization_id,
@@ -7,7 +6,7 @@ select
     city,
     state,
     zip
-from {{ ref('csv_silver__organizations') }}
+from {{ ref('csv_bronze__organizations') }}
 )
 
 select * from silver_data
