@@ -42,6 +42,10 @@ models:
         +database: HCB
         +schema: bronze
         +materialized: table
+      healthcare_sfk:
+        +database: HJB
+        +schema: bronze
+        +materialized: table
     02_silver:
         +database: HEALTHCARE_ANALYTICS_NEW
         +schema: silver
