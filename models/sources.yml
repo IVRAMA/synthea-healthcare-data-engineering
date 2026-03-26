@@ -27,19 +27,19 @@ sources:
     database: HJB
     schema: BRONZE
     tables:
-      - name: allergyintolerance
-      - name: careplan
-      - name: claim
-      - name: condition
-      - name: diagnosticreport
-      - name: encounter
-      - name: explanationofbenefit
-      - name: goal
-      - name: imagingstudy
-      - name: immunization
-      - name: medicationrequest
-      - name: observation
-      - name: organization
-      - name: patient
-      - name: practitioner
-      - name: procedure
+      - name: AllergyIntolerance
+      - name: CarePlan
+      - name: Claim
+      - name: Condition
+      - name: DiagnosticReport
+      - name: Encounter
+      - name: ExplanationOfBenefit
+      - name: Goal
+      - name: ImagingStudy
+      - name: Immunization
+      - name: MedicationRequest
+      - name: Observation
+      - name: Organization
+      - name: Patient
+      - name: Practitioner
+      - name: Procedure
