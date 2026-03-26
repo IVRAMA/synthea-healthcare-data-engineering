@@ -2,7 +2,7 @@ with
 
 source as (
 
-    select * from {{ source('json_data', 'ExplanationOfBenefit') }}
+    select * from {{ source('json_data', 'Procedure') }}
 
 ),
 
