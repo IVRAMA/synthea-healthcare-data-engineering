@@ -1,5 +1,3 @@
-{{ config(materialized='table') }}
-
 WITH silver_data as (
 select
 "ID" as claimn_id

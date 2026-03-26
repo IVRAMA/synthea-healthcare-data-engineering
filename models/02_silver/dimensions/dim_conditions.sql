@@ -2,12 +2,12 @@
 
 WITH silver_data as (
 select
-    "START" as condition_start
-    , "STOP" as condition_stop
-    , "PATIENT" as patient_id
-    , ENCOUNTER as encounter_id
-    , CODE as condition_code
-    , "DESCRIPTION" as condition_Description
+    condition_start
+    , condition_stop
+    , patient_id
+    , encounter_id
+    , condition_code
+    , condition_Description
 from {{ ref('csv_silver__conditions') }}
 )
 

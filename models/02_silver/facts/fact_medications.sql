@@ -1,7 +1,7 @@
 {{ config(materialized='table') }}
 
 WITH silver_data as (
-select
+(select
     "START" as medication_start_dt
     , "STOP" as medication_stop_dt
     , "PATIENT" as patient_id
@@ -15,7 +15,7 @@ select
     , "DESCRIPTION" medication_description
     , REASONCODE
     , REASONDESCRIPTION
-from {{ ref('csv_bronze__medications') }}
+from {{ ref('sfk_silver__medications') }})
 )
 
 select * from silver_data

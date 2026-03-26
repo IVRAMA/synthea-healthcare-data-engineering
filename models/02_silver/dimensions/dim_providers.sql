@@ -2,9 +2,9 @@
 
 WITH silver_data as (
 select
-    provider.id as provider_id,
-    provider.name as provider_name,
-    provider.organization as organization_id
+    provider_id,
+    provider_name,
+    organization_id
 from {{ ref('csv_silver__providers') }} as provider
 )
 

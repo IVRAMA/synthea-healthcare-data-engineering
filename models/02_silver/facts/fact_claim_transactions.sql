@@ -2,15 +2,15 @@
 
 WITH silver_data as (
 select
-"ID" as claim_transaction_id
+claim_transaction_id
 , "CLAIMID"
 , "CHARGEID"
 , "PATIENTID"
-, "TYPE" as claim_type
-, "AMOUNT" as claim_amount
-, "METHOD" as claim_method
-, "FROMDATE"  as claim_fromdate
-, "TODATE" as claim_todate
+, claim_type
+, claim_amount
+, claim_method
+, claim_fromdate
+, claim_todate
 , "PLACEOFSERVICE"
 , "PROCEDURECODE"
 , "MODIFIER1"
@@ -35,7 +35,7 @@ select
 , "FEESCHEDULEID"
 , "PROVIDERID"
 , "SUPERVISINGPROVIDERID"
-from {{ ref('csv_bronze__claims_transactions') }}
+from {{ ref('csv_silver__claims_transactions') }}
 )
 
 select * from silver_data
