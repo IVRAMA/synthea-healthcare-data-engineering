@@ -8,7 +8,7 @@ source as (
 
 renamed as (
 
-    select
+    select *
 
     from source
 
