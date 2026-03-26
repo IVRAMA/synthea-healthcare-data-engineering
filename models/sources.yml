@@ -26,6 +26,8 @@ sources:
   - name: json_data
     database: HJB
     schema: BRONZE
+    quoting:
+      identifier: true
     tables:
       - name: AllergyIntolerance
       - name: CarePlan
