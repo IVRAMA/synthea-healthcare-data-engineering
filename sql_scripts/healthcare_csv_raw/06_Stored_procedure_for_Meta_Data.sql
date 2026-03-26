@@ -1,8 +1,3 @@
-USE ROLE transform_role;
-USE WAREHOUSE TRANSFORMING;
-USE DATABASE HEALTHCARE_CSV_RAW;
-USE SCHEMA HEALTHCARE_CSV_RAW.BRONZE;
-
 CREATE OR REPLACE TABLE TABLE_COLUMN_PREVIEW (
   TABLE_NAME      VARCHAR,
   COLUMN_NAME     VARCHAR,
@@ -12,24 +7,31 @@ CREATE OR REPLACE TABLE TABLE_COLUMN_PREVIEW (
   DATA3           VARCHAR
 );
 
-CREATE OR REPLACE PROCEDURE BUILD_PREVIEW()
+ CREATE OR REPLACE PROCEDURE BUILD_PREVIEW()
 RETURNS VARCHAR
 LANGUAGE JAVASCRIPT
 AS
 $$
-var db  = 'HEALTHCARE_CSV_RAW';
-var sch = 'BRONZE';
+// Get context DYNAMICALLY
+var db_stmt = snowflake.createStatement({sqlText: "SELECT CURRENT_DATABASE()"});
+var db_rs = db_stmt.execute();
+db_rs.next();
+var db = db_rs.getColumnValue(1);
 
-// get all table & column metadata
-var rs = snowflake.execute({
+var sch_stmt = snowflake.createStatement({sqlText: "SELECT CURRENT_SCHEMA()"});
+var sch_rs = sch_stmt.execute();
+sch_rs.next();
+var sch = sch_rs.getColumnValue(1);
+
+// Your loop...
+var rs = snowflake.createStatement({
   sqlText: `SELECT TABLE_NAME, COLUMN_NAME, ORDINAL_POSITION
             FROM ${db}.INFORMATION_SCHEMA.COLUMNS
             WHERE TABLE_SCHEMA = '${sch}'
             ORDER BY TABLE_NAME, ORDINAL_POSITION`
-});
+}).execute();
 
-while (rs.next()) {
-  var tbl = rs.getColumnValue(1);
+while (rs.next()) { var tbl = rs.getColumnValue(1);
   var col = rs.getColumnValue(2);
   var ord = rs.getColumnValue(3);
 
@@ -55,11 +57,11 @@ while (rs.next()) {
     );
   `;
 
-  snowflake.execute({ sqlText: sql });
-}
+  snowflake.execute({ sqlText: sql });}
 
 return 'OK';
 $$;
+
 
 
 
