@@ -27,7 +27,7 @@ sources:
     database: HJB
     schema: BRONZE
     tables:
-      - name: allergyintolerance
+      - name: AllergyIntolerance
       - name: careplan
       - name: claim
       - name: condition

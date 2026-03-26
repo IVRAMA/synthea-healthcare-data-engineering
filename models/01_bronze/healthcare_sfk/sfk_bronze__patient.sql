@@ -2,7 +2,7 @@ with
 
 source as (
 
-    select * from {{ source('json_data', 'patient') }}
+    select * from {{ source('json_data', 'Patient') }}
 
 ),
 
