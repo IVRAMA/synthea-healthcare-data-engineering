@@ -28,7 +28,6 @@ sources:
     schema: BRONZE
     tables:
       - name: AllergyIntolerance
-<<<<<<< HEAD
       - name: CarePlan
       - name: Claim
       - name: Condition
@@ -44,20 +43,3 @@ sources:
       - name: Patient
       - name: Practitioner
       - name: Procedure
-=======
-      - name: careplan
-      - name: claim
-      - name: condition
-      - name: diagnosticreport
-      - name: encounter
-      - name: explanationofbenefit
-      - name: goal
-      - name: imagingstudy
-      - name: immunization
-      - name: medicationrequest
-      - name: observation
-      - name: organization
-      - name: patient
-      - name: practitioner
-      - name: procedure
->>>>>>> 4b78c37e7d10a90e97292461a8540a24917dd06f
