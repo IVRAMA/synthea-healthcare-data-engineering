@@ -39,7 +39,7 @@ models:
   my_new_project:
     01_bronze:
       healthcare_csv:
-        +database: HEALTHCARE_CSV_RAW
+        +database: HCB
         +schema: bronze
         +materialized: table
     02_silver:
