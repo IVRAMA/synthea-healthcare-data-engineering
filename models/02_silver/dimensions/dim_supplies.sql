@@ -2,7 +2,7 @@
 
 WITH silver_data as (
 select distinct
-    sup.code as supply_code,
+    supply_code,
     sup.description
 from {{ ref('csv_silver__supplies') }} as sup
 )

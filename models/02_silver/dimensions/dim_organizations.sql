@@ -1,8 +1,8 @@
 {{ config(materialized='table') }}
 WITH silver_data as (
 select
-    id as organization_id,
-    name as organization_name,
+    organization_id,
+    organization_name,
     address,
     city,
     state,

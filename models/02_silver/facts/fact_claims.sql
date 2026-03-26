@@ -2,8 +2,8 @@
 
 WITH silver_data as (
 select
-"ID" as claimn_id
-, "PATIENTID" as patient_id
+claimn_id
+, patient_id
 , "PROVIDERID"
 , "PRIMARYPATIENTINSURANCEID"
 , "SECONDARYPATIENTINSURANCEID"
@@ -33,7 +33,7 @@ select
 , "LASTBILLEDDATEP"
 , "HEALTHCARECLAIMTYPEID1"
 , "HEALTHCARECLAIMTYPEID2"
-from {{ ref('csv_bronze__claims') }}
+from {{ ref('csv_silver__claims') }}
 )
 
 select * from silver_data

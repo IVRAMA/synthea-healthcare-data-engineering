@@ -1,5 +1,3 @@
-{{ config(materialized='table') }}
-
 WITH silver_data as (
 
 select distinct

@@ -3,7 +3,7 @@
 WITH silver_data as (
 
 select distinct
-    med.code as medication_code,
+    med.medication_code,
     med.description,
     med.REASONCODE,
     med.REASONDESCRIPTION

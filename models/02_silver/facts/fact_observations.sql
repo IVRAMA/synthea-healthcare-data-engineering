@@ -2,7 +2,19 @@
 
 WITH silver_data as (
 
-select
+(select
+OBSERVATION_DATE
+, PATIENT_ID
+, ENCOUTER_ID
+, OBSERVATION_CATEGORY
+, OBSERVATION_CODE
+, OBSERVATION_DESCRIPTION
+, OBSERVATION_VALUE
+, OBSERVATION_UNITS
+, OBSERVATION_TYPE
+from {{ ref('csv_silver__observations') }})
+union all
+(select
 "DATE" AS OBSERVATION_DATE
 , "PATIENT" AS PATIENT_ID
 , "ENCOUNTER" AS ENCOUTER_ID
@@ -12,7 +24,7 @@ select
 , "VALUE" AS OBSERVATION_VALUE
 , "UNITS" AS OBSERVATION_UNITS
 , "TYPE" AS OBSERVATION_TYPE
-from {{ ref('csv_bronze__observations') }}
+from {{ ref('sfk_silver__observations') }})
 )
 
 select * from silver_data
