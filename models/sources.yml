@@ -1,6 +1,6 @@
 sources:
   - name: csv_data
-    database: HEALTHCARE_CSV_RAW
+    database: HCB
     schema: BRONZE
     tables:
       - name: allergies
@@ -22,3 +22,24 @@ sources:
       - name: providers
       - name: supplies
       - name: table_column_preview
+      - name: bronze
+  - name: json_data
+    database: HJB
+    schema: BRONZE
+    tables:
+      - name: allergyintolerance
+      - name: careplan
+      - name: claim
+      - name: condition
+      - name: diagnosticreport
+      - name: encounter
+      - name: explanationofbenefit
+      - name: goal
+      - name: imagingstudy
+      - name: immunization
+      - name: medicationrequest
+      - name: observation
+      - name: organization
+      - name: patient
+      - name: practitioner
+      - name: procedure
