@@ -1,9 +1,3 @@
-USE ROLE transform_role;
-USE WAREHOUSE TRANSFORMING;
-USE DATABASE HEALTHCARE_CSV_RAW;
-USE SCHEMA HEALTHCARE_CSV_RAW.BRONZE;
-
-
 CREATE OR REPLACE TABLE INFERRED_COLUMN_TYPES AS 
 SELECT
     table_name,
@@ -48,4 +42,4 @@ FROM TABLE_COLUMN_PREVIEW
 QUALIFY ROW_NUMBER() OVER (PARTITION BY table_name, column_name ORDER BY ordinal_position) = 1
 ORDER BY table_name, ordinal_position;
 
-update HEALTHCARE_CSV_RAW.BRONZE.INFERRED_COLUMN_TYPES set column_name = concat('"',column_name,'"');
+update BRONZE.INFERRED_COLUMN_TYPES set column_name = concat('"',column_name,'"');
