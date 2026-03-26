@@ -14,4 +14,10 @@ renamed as (
 
 )
 
-select * from renamed
+select SELECT
+    TO_TIMESTAMP_NTZ("DATE") AS "DATE",
+    "PATIENT" AS "PATIENT",
+    "ENCOUNTER" AS "ENCOUNTER",
+    TO_NUMBER("CODE") AS "CODE",
+    "DESCRIPTION" AS "DESCRIPTION",
+    TRY_TO_DOUBLE("BASE_COST") AS "BASE_COST" from renamed
