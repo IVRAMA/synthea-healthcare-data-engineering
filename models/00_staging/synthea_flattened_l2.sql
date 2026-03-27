@@ -1,7 +1,7 @@
 {{ config(
     materialized='table',
     database='HDB',
-    schema='BRONZE', 
+    schema='STAGING', 
     alias='synthea_flattened_l2'
 ) }}
 
