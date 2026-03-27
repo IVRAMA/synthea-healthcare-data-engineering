@@ -26,6 +26,18 @@ union all
 , "TYPE" AS OBSERVATION_TYPE
 from {{ ref('sfk_silver__observations') }})
 )
-
+union all
+(select
+"DATE" AS OBSERVATION_DATE
+, "PATIENT" AS PATIENT_ID
+, "ENCOUNTER" AS ENCOUTER_ID
+, "CATEGORY" AS OBSERVATION_CATEGORY
+, "CODE" AS OBSERVATION_CODE
+, "DESCRIPTION" AS OBSERVATION_DESCRIPTION
+, "VALUE" AS OBSERVATION_VALUE
+, "UNITS" AS OBSERVATION_UNITS
+, "TYPE" AS OBSERVATION_TYPE
+from {{ ref('dbt_silver__observations') }})
+)
 select * from silver_data
 
