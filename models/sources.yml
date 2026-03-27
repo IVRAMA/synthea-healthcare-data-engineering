@@ -45,3 +45,8 @@ sources:
       - name: Patient
       - name: Practitioner
       - name: Procedure
+  - name: synthea
+    database: HJB
+    schema: STAGING
+    tables:
+      - name: master_json
