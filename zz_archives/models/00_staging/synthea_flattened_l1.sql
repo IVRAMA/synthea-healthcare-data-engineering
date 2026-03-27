@@ -2,8 +2,8 @@
     materialized='incremental',
     incremental_strategy='merge',
     unique_key='patient_id',
-    database='HEALTHCARE_RAW',
-    schema='DBT_BRONZE', 
+    database='HDB',
+    schema='BRONZE', 
     alias='SYNTHEA_FLATTENED_L1'
 ) }}
 

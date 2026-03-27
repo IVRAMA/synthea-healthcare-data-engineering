@@ -1,7 +1,7 @@
 {{ config(
     materialized='table',
-    database='HEALTHCARE_RAW',
-    schema='DBT_SILVER_UTIL', 
+    database='HDB',
+    schema='BRONZE', 
     alias='synthea_flattened_l2'
 ) }}
 
