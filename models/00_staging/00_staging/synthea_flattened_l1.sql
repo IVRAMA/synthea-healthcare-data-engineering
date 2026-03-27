@@ -3,7 +3,7 @@
     incremental_strategy='merge',
     unique_key='patient_id',
     database='HDB',
-    schema='BRONZE', 
+    schema='STAGING', 
     alias='SYNTHEA_FLATTENED_L1'
 ) }}
 
