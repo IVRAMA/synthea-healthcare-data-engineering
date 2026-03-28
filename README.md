@@ -9,7 +9,7 @@
 **Database**: healthcare_raw (source) → healthcare_analytics (target)  
 **Tech Stack**: dbt, Snowflake, Synthea, Python  
 **Date**: February 2026  
-**Purpose**: Senior Data Engineer Portfolio (Warner Bros Prep)
+**Purpose**: DBT Pipeline for FHIR JSON Data
 
 ![Lineage DAG](images/lineage_full.png)
 
