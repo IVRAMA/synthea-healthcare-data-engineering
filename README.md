@@ -11,7 +11,7 @@
 **Date**: February 2026  
 **Purpose**: Senior Data Engineer Portfolio (Warner Bros Prep)
 
-![Lineage DAG](images/lineage.PNG)
+![Lineage DAG](images/lineage_full.png)
 
 ---
 
