@@ -16,8 +16,8 @@ with cte_MedicationRequest as
     ,  replace(replace(replace(replace(f.value[0]:encounter,'{"reference"',''),'urn:uuid:',')'),':")',''),'"}','')::string as encounter_id
     ,  f.value[0]:id::string as MedicationRequest_id
     ,  f.value[0]:intent::string as intent
-    ,  f.value[0]:medicationCodeableConcept::string as medicationCodeableConcept
-    ,  f.value[0]:requester::string as requester
+    ,  f.value[0]:medicationCodeableConcept as medicationCodeableConcept
+    ,  f.value[0]:requester as requester
     ,  f.value[0]:resourceType::string as resourceType
     ,  f.value[0]:status::string as status
     ,  f.value[0]:subject::string as subject

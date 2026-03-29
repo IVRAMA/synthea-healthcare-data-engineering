@@ -18,13 +18,13 @@ with cte_Claim as
     ,  f.value[0]:created::timestamp as created
     ,  f.value[0]:id::string as Claim_id
     ,  f.value[0]:insurance[0]::string as insurance
-    ,  f.value[0]:item[0]::string as item
+    ,  f.value[0]:item[0] as item
     ,  f.value[0]:patient::string as patient
     ,  f.value[0]:priority::string as priority
-    ,  f.value[0]:provider::string as provider
+    ,  f.value[0]:provider as provider
     ,  f.value[0]:resourceType::string as resourceType
     ,  f.value[0]:status::string as status
-    ,  f.value[0]:total::string as total
+    ,  f.value[0]:total as total
     ,  f.value[0]:type::string as claim_type
     ,  f.value[0]:use::string as claim_use
 from 

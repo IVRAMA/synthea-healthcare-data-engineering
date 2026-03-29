@@ -36,7 +36,7 @@ union all
 , "PAYER_COVERAGE"
 , "REASONCODE"
 , "REASONDESCRIPTION"
-from {{ ref('sfk_silver_encounters') }})
+from {{ ref('sfk_silver__encounters') }})
 union all
 (select
 "ID" AS encounter_id
@@ -54,7 +54,7 @@ union all
 , "PAYER_COVERAGE"
 , "REASONCODE"
 , "REASONDESCRIPTION"
-from {{ ref('dbt_silver_encounters') }})
+from {{ ref('dbt_silver__encounters') }})
 )
 
 select * from silver_data

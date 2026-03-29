@@ -1,28 +1,28 @@
 WITH encounter as (
     select
-        "id"
-        , "period":"start"::VARCHAR as"START"
-        , "period":"end"::VARCHAR as "STOP"
-        , replace("participant"[0]:"individual"."reference"::varchar,'urn:uuid:','') AS patient
-        , DECODE("class":"code", 'AMB', 'Ambulatory', 'EMER', 'Emergency', 'IMP', 'Inpatient') ENCOUNTERCLASS
-        , "reasonCode"[0]:"coding"[0]:"code"::varchar as REASONCODE
-        , "reasonCode"[0]:"coding"[0]:"display"::varchar as REASONDESCRIPTION
+        Encounter_id as "id"
+        , encounter_start_dt ::VARCHAR as"START"
+        , encounter_end_dt::VARCHAR as "STOP"
+        , replace(PARSE_JSON(participant):"individual"."reference"::varchar,'urn:uuid:','') AS patient
+        , DECODE(PARSE_JSON(class):code, 'AMB', 'Ambulatory', 'EMER', 'Emergency', 'IMP', 'Inpatient') ENCOUNTERCLASS
+        , PARSE_JSON(reasonCode):"coding"[0]:"code"::varchar as REASONCODE
+        , PARSE_JSON(reasonCode):"coding"[0]:"display"::varchar as REASONDESCRIPTION
     from {{ ref('dbt_bronze__Encounter') }}) 
 , medications as (
     select
-        distinct "id"
-        , replace("requester":"reference",'urn:uuid:','') as PATIENT
-        , replace("encounter":"reference",'urn:uuid:','') as ENCOUNTER
-        , "medicationCodeableConcept":"coding"[0]:"code"::varchar as CODE
-        , "medicationCodeableConcept":"coding"[0]:"display"::varchar as DESCRIPTION
+        distinct MedicationRequest_id as "id"
+        , replace(PARSE_JSON(requester):"reference",'urn:uuid:','') as PATIENT
+        , encounter_id as ENCOUNTER
+        , PARSE_JSON(medicationCodeableConcept):"coding"[0]:"code"::varchar as CODE
+        , PARSE_JSON(medicationCodeableConcept):"coding"[0]:"display"::varchar as DESCRIPTION
     FROM {{ ref('dbt_bronze__MedicationRequest') }} )
 ,  claims as (
     select 
-        replace( "item"[0]:"encounter"[0]:"reference",'urn:uuid:','')::varchar as encounter_id
-        , replace("provider":"reference",'urn:uuid:','')::varchar as claim_provider
-        , "item"[0]:"productOrService":coding[0]:"code"::varchar as "CODE"
-        , "item"[0]:"productOrService":coding[0]:"display"::varchar as "DESCRIPTION"
-        , "total":"value"::varchar as TOTAL_CLAIM_COST
+        replace( PARSE_JSON(item):"encounter"[0]:"reference",'urn:uuid:','')::varchar as encounter_id
+        , replace(PARSE_JSON(provider):"reference",'urn:uuid:','')::varchar as claim_provider
+        , PARSE_JSON(item):"productOrService":coding[0]:"code"::varchar as "CODE"
+        , PARSE_JSON(item):"productOrService":coding[0]:"display"::varchar as "DESCRIPTION"
+        , PARSE_JSON(total):"value"::varchar as TOTAL_CLAIM_COST
     from {{ ref('dbt_bronze__Claim') }})
 select
     DISTINCT m.ENCOUNTER 
