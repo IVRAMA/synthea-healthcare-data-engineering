@@ -72,10 +72,10 @@ flowchart TD
     end
 
     subgraph SILVER_VIEWS["SILVER Views"]
-        CSV_SILVER["stg_csv_patients<br/>VIEW from csv bronze"]
-        SFK_SILVER["stg_sf_patients<br/>VIEW from sf_json bronze"]
-        DBT_SILVER["stg_dbt_patients<br/>VIEW from dbt bronze"]
-        PY_SILVER["stg_python_patients<br/>VIEW from python bronze"]
+        CSV_SILVER["csv_silver_patients<br/>VIEW from csv bronze"]
+        SFK_SILVER["sfk_silver_patients<br/>VIEW from sf_json bronze"]
+        DBT_SILVER["dbt_silver_patients<br/>VIEW from dbt bronze"]
+        PY_SILVER["pyt_silver_patients<br/>VIEW from python bronze"]
     end
 
     subgraph SILVER_TABLES["SILVER Tables"]
