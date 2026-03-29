@@ -11,7 +11,7 @@
 WITH patients_flattened AS (
 select 
      f.value[0]:id::string as patient_id
-    , f.value[0]:address[0]::string as address
+    , f.value[0]:address[0]  as address
     , f.value[0]:address[0].city::string as city
     , f.value[0]:address[0].state::string as state
     , f.value[0]:birthDate::date as birthDate

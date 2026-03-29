@@ -1,19 +1,19 @@
 with observation as (
 SELECT
-    DISTINCT "id"
-    , "effectiveDateTime" as "DATE"
-    , replace("encounter":"reference"::varchar,'urn:uuid:','') as encounter_id
-    , "category"[0]:"coding"[0]: "display"::varchar as CATEGORY
-    , "code":"coding"[0]:"code"::varchar as CODE
-    , "code":"coding"[0]:"display"::varchar as DESCRIPTION
-    , "valueQuantity":"value"::varchar as  VALUE
-    , "valueQuantity":"code"::varchar as  UNITS
+    DISTINCT Observation_id as "id"
+    , effectiveDateTime as "DATE"
+    , encounter_id
+    , PARSE_JSON(category):"coding"[0]: "display"::varchar as CATEGORY
+    , PARSE_JSON(code):"coding"[0]:"code"::varchar as CODE
+    , PARSE_JSON(code):"coding"[0]:"display"::varchar as DESCRIPTION
+    , PARSE_JSON(valueQuantity):"value"::varchar as  VALUE
+    , PARSE_JSON(valueQuantity):"code"::varchar as  UNITS
     , 'numeric' as "TYPE"
 FROM {{ ref('dbt_bronze__Observation') }})
 , encounter as (
     select
-        "id"
-        , replace("participant"[0]:"individual"."reference"::varchar,'urn:uuid:','') AS patient
+        Encounter_id as "id"
+        , replace(PARSE_JSON(participant):"individual"."reference"::varchar,'urn:uuid:','') AS patient
     from {{ ref('dbt_bronze__Encounter') }})
 select 
     distinct o."id"

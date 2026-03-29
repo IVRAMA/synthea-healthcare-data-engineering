@@ -11,7 +11,7 @@
 with cte_Procedure as
 (select
     a.patient_id
-    ,  f.value[0]:code::string as code
+    ,  f.value[0]:code as code
     ,  replace(replace(replace(replace(f.value[0]:encounter,'{"reference"',''),'urn:uuid:',')'),':")',''),'"}','')::string as encounter_id
     ,  f.value[0]:id::string as Procedure_id
     ,  f.value[0]:performedPeriod.end::timestamp as performedPeriod_end
