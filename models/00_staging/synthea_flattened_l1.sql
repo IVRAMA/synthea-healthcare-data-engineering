@@ -4,7 +4,7 @@
     unique_key='patient_id',
     database='HDB',
     schema='STAGING', 
-    alias='SYNTHEA_FLATTENED_L1'
+    alias='synthea_flattened_l1'
 ) }}
 
 
