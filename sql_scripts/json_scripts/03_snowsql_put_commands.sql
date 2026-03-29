@@ -1,0 +1,1 @@
+PUT file://D:/dbt_projects/healthcare_db/json/stream_100_pats/*.json @stage_synthea_STREAM_100_PATS AUTO_COMPRESS=TRUE;
