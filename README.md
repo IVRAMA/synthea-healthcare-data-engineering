@@ -50,8 +50,9 @@ This dbt project demonstrates end-to-end healthcare analytics pipelines, evolvin
 ``` mermaid
 flowchart TD
     subgraph SOURCES["Sources"]
-        CSV["17 Clinical Tables<br/>CSV"]
-        STAGING_CSV["staging.csv_stages<br/>seperate"]
+        CSV_SRC["CSV<br/>17 Clinical Tables<br/>staging.csv_stages"]
+        SFK_SRC["SFK/SDK<br/>master_json<br/>L1_json L2_json"]
+        DBT_SRC["DBT Sources<br/>JSON processing"]
     end
     
     subgraph BRONZE["Bronze Layer"]
@@ -74,15 +75,16 @@ flowchart TD
         ENCOUNTER_SUMMARY["encounter_summary"]
     end
     
-    CSV --> STAGING_CSV
-    STAGING_CSV -.->|Snowflake COPY| CSV_BRONZE
+    CSV_SRC -.->|Snowflake COPY| CSV_BRONZE
+    SFK_SRC -.->|Snowflake Stages| SFK_BRONZE
+    DBT_SRC -.->|dbt sources| DBT_BRONZE
+    
     CSV_BRONZE -.->|Views| CSV_SILVER
-    CSV_SILVER -.->|Union| UNION
-    
     SFK_BRONZE -.->|Views| SFK_SILVER
-    SFK_SILVER -.->|Union| UNION
-    
     DBT_BRONZE -.->|Views| DBT_SILVER
+    
+    CSV_SILVER -.->|Union| UNION
+    SFK_SILVER -.->|Union| UNION
     DBT_SILVER -.->|Union| UNION
     
     UNION --> ENCOUNTER_SUMMARY
@@ -93,7 +95,7 @@ flowchart TD
     classDef purple fill:#e1bee7,stroke:#333,stroke-width:3px,color:#000
     classDef blue fill:#bbdefb,stroke:#333,stroke-width:3px,color:#000
     
-    class CSV,STAGING_CSV yellow
+    class CSV_SRC,SFK_SRC,DBT_SRC yellow
     class CSV_BRONZE,SFK_BRONZE,DBT_BRONZE green
     class CSV_SILVER,SFK_SILVER,DBT_SILVER orange
     class UNION purple
