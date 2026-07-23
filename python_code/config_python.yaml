@@ -1,0 +1,17 @@
+snowflake:
+  account: "KLWOLUI-NE92343"
+  user: "HEALTHCARE"
+  password: "Healthcare_User123"
+  host: "KLWOLUI-NE92343D.snowflakecomputing.com"
+  region: "AWS_AP_SOUTHEAST_1"
+  warehouse: "TRANSFORMING"
+  role: "transform_role"
+  authenticator: "SNOWFLAKE"
+pipeline:
+  csv_database: "HCB_PYTHON"
+  csv_schema: "BRONZE"
+  JSON_database: "HJB_PYTHON"
+  staging_schema: "STAGING"
+  bronze_schema: "BRONZE"
+paths:
+  csv_dir: "D:\\dbt_projects\\healthcare_db\\csvs\\"

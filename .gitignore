@@ -4,3 +4,7 @@ target/
 dbt_packages/
 logs/
 env/
+.vscode/
+.venv/
+venv311/
+zz_archives/
