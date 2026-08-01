@@ -8,6 +8,18 @@ AS
 $$
 BEGIN
   -- 1. TEMP FLATTENED_JSON FROM MASTER_JSON STREAM (batch data only)
+
+    CREATE OR REPLACE TEMP TABLE TAB_DATA_FOR_AGG AS  
+    SELECT  
+      raw:entry[0].fullUrl::string AS patient_id,
+      batch_no,
+      f.value:resource:resourceType AS fkey,
+      f.value:resource AS fval
+    FROM LOADING.MASTER_JSON
+    , LATERAL FLATTEN(INPUT => raw:entry) F
+    WHERE batch_no =  :p_batch_no ;
+
+
   CREATE OR REPLACE TEMP TABLE COL_DATA_FOR_AGG AS  
     SELECT  
       raw:entry[0].fullUrl::string AS patient_id,
@@ -16,9 +28,9 @@ BEGIN
       f.value:resource AS fval,
       g.key AS column_name,
       typeof(g.value) AS data_type_L1
-    FROM STAGING.MASTER_JSON
+    FROM LOADING.MASTER_JSON
     , LATERAL FLATTEN(INPUT => raw:entry) F
-    , LATERAL FLATTEN(INPUT => FVAL) G
+    , LATERAL FLATTEN(INPUT => f.value:resource) G
     WHERE batch_no =  :p_batch_no ; -- Get data for only the param batch defined
   
   -- 2. ARRAY_AGG for L1 clinical JSON
@@ -28,7 +40,7 @@ BEGIN
     SELECT 
       PATIENT_ID, FKEY,
       CAST(ARRAY_AGG(FVAL) AS VARIANT) AS FVAL 
-    FROM COL_DATA_FOR_AGG  
+    FROM TAB_DATA_FOR_AGG  
     GROUP BY 1,2; 
 
 
@@ -59,8 +71,16 @@ CREATE OR REPLACE TEMP TABLE TEMP_SYNTHEA_FLATTENED_L1 AS
   WHERE C.batch_no =  :p_batch_no 
   GROUP BY A.PATIENT_ID;
 
-    INSERT INTO STAGING.SYNTHEA_FLATTENED_L1 (PATIENT_ID, LOAD_TS, PAT_TABLES, COL_META, CLINICAL_JSON,batch_no)
-    SELECT source.PATIENT_ID, source.LOAD_TS, source.PAT_TABLES, source.COL_META, source.CLINICAL_JSON,:p_batch_no  FROM TEMP_SYNTHEA_FLATTENED_L1 source;
+    INSERT INTO LOADING.SYNTHEA_FLATTENED_L1 (PATIENT_ID, LOAD_TS, PAT_TABLES, COL_META, CLINICAL_JSON,batch_no)
+    SELECT source.PATIENT_ID, source.LOAD_TS, source.PAT_TABLES, source.COL_META, source.CLINICAL_JSON,:p_batch_no  
+    FROM TEMP_SYNTHEA_FLATTENED_L1 source
+    WHERE NOT EXISTS
+(
+    SELECT 1
+    FROM LOADING.SYNTHEA_FLATTENED_L1 T
+    WHERE T.PATIENT_ID = SOURCE.PATIENT_ID
+)
+    ;
 
 END;
 $$;
@@ -84,14 +104,14 @@ FROM (
         F.VALUE:TABLE::STRING    AS TABLE_NAME,
         F.VALUE:DATATYPE::STRING AS COL_DATA_TYPE,
         :p_batch_no as batch_no
-    FROM STAGING.SYNTHEA_FLATTENED_L1,
+    FROM LOADING.SYNTHEA_FLATTENED_L1,
          LATERAL FLATTEN (INPUT => COL_META) F
     WHERE batch_no =  :p_batch_no 
     GROUP BY 1,2,3,4
     ORDER BY 1,2,3,4
 ) S;
 
-MERGE INTO STAGING.SYNTHEA_FLATTENED_L2 AS target
+MERGE INTO LOADING.SYNTHEA_FLATTENED_L2 AS target
   USING TEMP_SYNTHEA_FLATTENED_L2 AS source
   ON target.TABLE_NAME = source.TABLE_NAME AND target.COLUMN_NAME = source.COLUMN_NAME AND target.batch_no  = source.batch_no
   WHEN MATCHED THEN
@@ -129,7 +149,7 @@ BEGIN
        'X-Small' AS warehouse_size,
        CURRENT_TIMESTAMP() AS audit_ts
 FROM information_schema.tables t
-  WHERE t.table_schema IN ('BRONZE','STAGING') 
+  WHERE t.table_schema IN ('STAGING','LOADING') 
    AND TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME <> 'PIPELINE_AUDIT'
   ORDER BY t.LAST_DDL DESC;
 

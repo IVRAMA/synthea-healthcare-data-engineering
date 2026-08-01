@@ -1,9 +1,9 @@
 snowflake:
-  account: "KLWOLUI-NE92343"
+  account: "KJEEYMR-DH14295"
   user: "HEALTHCARE"
   password: "Healthcare_User123"
-  host: "KLWOLUI-NE92343D.snowflakecomputing.com"
-  region: "AWS_AP_SOUTHEAST_1"
+  host: "KJEEYMR-DH14295.snowflakecomputing.com"
+  region: "AWS_AP_SOUTHEAST_7"
   warehouse: "TRANSFORMING"
   role: "transform_role"
   authenticator: "SNOWFLAKE"
