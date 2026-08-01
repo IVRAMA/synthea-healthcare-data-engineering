@@ -48,69 +48,72 @@ This dbt project demonstrates end-to-end healthcare analytics pipelines, evolvin
 ### Hybrid Medallion and Staging Transformation Architecture
 
 ``` mermaid
-graph TD
+flowchart TD
     subgraph SOURCES["SOURCES"]
-        CSV[Synthea CSV<br/>17 Clinical Tables]
-        JSON_SF[Snowflake JSON<br/>Master JSON]
-        DBT_JSON[dbt JSON<br/>Direct src]
-        PYTHON[Python Script<br/>100k Patients Direct]
+        CSV_SRC["Synthea CSV<br/>17 Clinical Tables"]
+        SFK_SRC["Snowflake JSON<br/>Master JSON"]
+        DBT_SRC["dbt JSON<br/>Direct src"]
+        PY_SRC["Python Script<br/>100k Patients Direct"]
     end
 
     subgraph STAGING["STAGING"]
-        CSV_STG[staging.csv_stages<br/>External + COPY]
-        JSON_RAW[staging.master_json]
-        L1[staging.L1_json<br/>Explode arrays]
-        L2[staging.L2_json<br/>Normalize]
+        CSV_STAGE["staging.csv_stages<br/>External + COPY"]
+        SFK_L1["L1_synthea"]
+        SFK_L2["L2_synthea"]
+        DBT_L1["L1_synthea"]
+        DBT_L2["L2_synthea"]
     end
 
-    subgraph BRONZE["BRONZE - Clinical Raw<br/>17 Tables Each"]
-        CSV_B[bronze.csv_clinical_*]
-        JSON_B[bronze.sf_json_clinical_*]
-        DBT_B[bronze.dbt_json_clinical_*]
-        PY_B[bronze.python_clinical_*]
+    subgraph BRONZE["BRONZE - Clinical Raw"]
+        CSV_BRONZE["bronze.csv_clinical_*"]
+        SFK_BRONZE["bronze.sf_json_clinical_*"]
+        DBT_BRONZE["bronze.dbt_json_clinical_*"]
+        PY_BRONZE["bronze.python_clinical_*"]
     end
 
-    subgraph SILVER_VIEWS["SILVER Views<br/>Source-Specific stg_*"]
-        CSV_STG_V[stg_csv_patients<br/>VIEW from csv bronze]
-        JSON_STG_V[stg_sf_patients<br/>VIEW from sf_json bronze]
-        DBT_STG_V[stg_dbt_patients<br/>VIEW from dbt bronze]
-        PY_STG_V[stg_python_patients<br/>VIEW from python bronze]
+    subgraph SILVER_VIEWS["SILVER Views"]
+        CSV_SILVER["csv_silver_patients<br/>VIEW from csv bronze"]
+        SFK_SILVER["sfk_silver_patients<br/>VIEW from sf_json bronze"]
+        DBT_SILVER["dbt_silver_patients<br/>VIEW from dbt bronze"]
+        PY_SILVER["pyt_silver_patients<br/>VIEW from python bronze"]
     end
 
-    subgraph SILVER["SILVER Tables<br/>Unified Modeling"]
-        MODEL[dim_patient, fact_encounter<br/>TABLES<br/>UNION stg_* + SCD]
+    subgraph SILVER_TABLES["SILVER Tables"]
+        MODELS["dim_patient,<br/>fact_encounter<br/>TABLES<br/>UNION stg_* + SCD"]
     end
 
     subgraph GOLD["GOLD"]
-        SUMMARY[encounter_summary<br/>Denormalized marts]
+        ENCOUNTER["encounter_summary<br/>Denormalized marts"]
     end
 
-    %% Flows
-    CSV --> CSV_STG --> CSV_B --> CSV_STG_V
-    JSON_SF --> JSON_RAW --> L1 --> L2 --> JSON_B --> JSON_STG_V
-    DBT_JSON --> DBT_B --> DBT_STG_V
-    PYTHON --> PY_B --> PY_STG_V
-    
-    CSV_STG_V -.-> MODEL
-    JSON_STG_V -.-> MODEL
-    DBT_STG_V -.-> MODEL
-    PY_STG_V -.-> MODEL
-    
-    MODEL --> SUMMARY
+    CSV_SRC --> CSV_STAGE --> CSV_BRONZE --> CSV_SILVER
+    SFK_SRC --> SFK_L1 --> SFK_L2 --> SFK_BRONZE --> SFK_SILVER
+    DBT_SRC --> DBT_L1 --> DBT_L2 --> DBT_BRONZE --> DBT_SILVER
+    PY_SRC --> PY_BRONZE --> PY_SILVER
 
-    classDef source fill:#ffeaa7
-    classDef staging fill:#fdcb6e
-    classDef bronze fill:#00b894
-    classDef silver_view fill:#74b9ff
-    classDef silver fill:#0984e3
-    classDef gold fill:#e17055
+    CSV_SILVER -.-> MODELS
+    SFK_SILVER -.-> MODELS
+    DBT_SILVER -.-> MODELS
+    PY_SILVER -.-> MODELS
+    MODELS --> ENCOUNTER
 
-    class CSV,JSON_SF,DBT_JSON,PYTHON source
-    class CSV_STG,JSON_RAW,L1,L2 staging
-    class CSV_B,JSON_B,DBT_B,PY_B bronze
-    class CSV_STG_V,JSON_STG_V,DBT_STG_V,PY_STG_V silver_view
-    class MODEL silver
-    class SUMMARY gold
+    classDef source fill:#fff7cc,stroke:#c9b458,stroke-width:1.5px,color:#000
+    classDef stage fill:#ffd89a,stroke:#c98b2f,stroke-width:1.5px,color:#000
+    classDef bronze fill:#19b5a5,stroke:#0d6f66,stroke-width:1.5px,color:#fff
+    classDef silver fill:#7fb5ff,stroke:#3367b7,stroke-width:1.5px,color:#000
+    classDef model fill:#0d84d8,stroke:#075b94,stroke-width:1.5px,color:#fff
+    classDef gold fill:#e7896d,stroke:#b45a43,stroke-width:1.5px,color:#000
+    classDef sourceYellow fill:#fff7cc,stroke:#c9b458,stroke-width:1.5px,color:#000
+    classDef sourcePlain fill:#f5f5f5,stroke:#999,stroke-width:1.5px,color:#000
+    
+    class SFK_SRC,DBT_SRC sourceYellow
+    class CSV_SRC sourcePlain
+    class CSV_SRC,SFK_SRC,DBT_SRC,PY_SRC source
+    class CSV_STAGE,SFK_L1,SFK_L2,DBT_L1,DBT_L2 stage
+    class CSV_BRONZE,SFK_BRONZE,DBT_BRONZE,PY_BRONZE bronze
+    class CSV_SILVER,SFK_SILVER,DBT_SILVER,PY_SILVER silver
+    class MODELS model
+    class ENCOUNTER gold
 ```
 
 ## 3.  Detailed Layer Implementation

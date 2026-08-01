@@ -127,14 +127,14 @@ def main():
     config = load_yaml(args.config)
     pipelines_cfg = load_yaml(args.pipeline_config)["pipelines"]
 
-    base_log_dir = config.get("paths", {}).get("logs_root", "C:\\dbt_projects\\healthcare_db\\logs")
+    base_log_dir = config.get("paths", {}).get("logs_root", "D:\\dbt_projects\\healthcare_db\\logs")
 
     # Optional clean step
     if args.clean and "clean" in pipelines_cfg:
         run_pipeline("clean", config, pipelines_cfg, base_log_dir)
 
     # Core pipelines – adjust order as defined in your pipeline.yaml
-    for name in ["shared", "csv", "json_staging", "json_bronze"]:
+    for name in ["shared", "csv", "json_loading", "json_staging"]:
         if name in pipelines_cfg:
             run_pipeline(name, config, pipelines_cfg, base_log_dir)
 
