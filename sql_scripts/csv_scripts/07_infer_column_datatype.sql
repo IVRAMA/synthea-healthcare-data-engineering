@@ -42,4 +42,4 @@ FROM TABLE_COLUMN_PREVIEW
 QUALIFY ROW_NUMBER() OVER (PARTITION BY table_name, column_name ORDER BY ordinal_position) = 1
 ORDER BY table_name, ordinal_position;
 
-update BRONZE.INFERRED_COLUMN_TYPES set column_name = concat('"',column_name,'"');
+update STAGING.INFERRED_COLUMN_TYPES set column_name = concat('"',column_name,'"');

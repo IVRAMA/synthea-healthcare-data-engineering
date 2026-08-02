@@ -27,7 +27,7 @@ var sch = sch_rs.getColumnValue(1);
 var rs = snowflake.createStatement({
   sqlText: `SELECT TABLE_NAME, COLUMN_NAME, ORDINAL_POSITION
             FROM ${db}.INFORMATION_SCHEMA.COLUMNS
-            WHERE TABLE_SCHEMA = '${sch}'
+            WHERE TABLE_SCHEMA = 'STAGING'
             ORDER BY TABLE_NAME, ORDINAL_POSITION`
 }).execute();
 
@@ -42,7 +42,7 @@ while (rs.next()) { var tbl = rs.getColumnValue(1);
   var col_literal = "'" + col.replace(/'/g, "''") + "'";
 
   var sql = `
-    INSERT INTO ${db}.BRONZE.TABLE_COLUMN_PREVIEW
+    INSERT INTO ${db}.STAGING.TABLE_COLUMN_PREVIEW
     SELECT 
       '${tbl}' AS table_name,
       ${col_literal} AS column_name,
