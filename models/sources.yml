@@ -1,0 +1,8 @@
+sources:
+  - name: csv_data
+    database: HCB
+    schema: STAGING
+    tables:
+      - name: ENCOUNTERS
+      - name: PATIENTS
+      - name: PROVIDERS
