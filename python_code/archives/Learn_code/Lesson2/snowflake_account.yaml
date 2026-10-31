@@ -1,0 +1,11 @@
+file_location:
+    windows_path: "C:\\Users\\MY-PC\\.snowsql\\config"
+snowflake_account:
+    account: "RFLZWAX-GP68998"
+    user: "HEALTHCARE"
+    password: "Healthcare_User123"
+    host: "RFLZWAX-GP68998.snowflakecomputing.com"
+    region: "AWS_AP_SOUTHEAST_7"
+    warehouse: "TRANSFORMING"
+    role: "transform_role"
+    authenticator: "SNOWFLAKE"
