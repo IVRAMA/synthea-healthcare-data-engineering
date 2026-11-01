@@ -20,6 +20,7 @@ select
     ,"LON" 
     ,"ENCOUNTERS" 
     ,"PROCEDURES" 
+    , "LOAD_TS"
   FROM {{ source('csv_data', 'PROVIDERS') }}
 )
 
