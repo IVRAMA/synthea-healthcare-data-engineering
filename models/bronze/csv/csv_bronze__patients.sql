@@ -35,6 +35,7 @@ with source as (
         ,"HEALTHCARE_EXPENSES"
         ,"HEALTHCARE_COVERAGE"
         ,"INCOME"
+        , "LOAD_TS"
     from {{ source('csv_data', 'PATIENTS') }} 
 )
 

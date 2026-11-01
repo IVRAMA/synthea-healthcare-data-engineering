@@ -19,7 +19,7 @@
     {% if 'NUMBER' in dtype or 'FLOAT' in dtype %}
         TRY_TO_NUMBER({{ col }}) AS {{ col }}
     {% elif 'TIMESTAMP' in dtype %}
-        TRY_TO_TIMESTAMP_NTZ({{ col }}) AS {{ col }}
+        TO_TIMESTAMP({{ col }}) AS {{ col }}
     {% elif 'DATE' in dtype %}
         TRY_TO_DATE({{ col }}) AS {{ col }}
     {% else %}

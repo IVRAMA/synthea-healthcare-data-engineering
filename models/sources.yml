@@ -6,3 +6,18 @@ sources:
       - name: ENCOUNTERS
       - name: PATIENTS
       - name: PROVIDERS
+      - name: ALLERGIES
+      - name: CAREPLANS
+      - name: PAYER_TRANSITIONS
+      - name: CLAIMS
+      - name: MEDICATIONS
+      - name: SUPPLIES
+      - name: IMAGING_STUDIES
+      - name: PAYERS
+      - name: OBSERVATIONS
+      - name: ORGANIZATIONS
+      - name: CLAIMS_TRANSACTIONS
+      - name: DEVICES
+      - name: IMMUNIZATIONS
+      - name: PROCEDURES
+      - name: CONDITIONS

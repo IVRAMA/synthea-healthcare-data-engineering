@@ -22,6 +22,7 @@ select "ID"
 ,"PAYER_COVERAGE" 
 ,"REASONCODE" 
 ,"REASONDESCRIPTION" 
+, "LOAD_TS"
 from {{ source('csv_data', 'ENCOUNTERS') }} 
 )
 
