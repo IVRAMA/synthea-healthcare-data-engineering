@@ -1,0 +1,7 @@
+pipeline:
+  name : csv
+  database: HCB
+  schema: bronze
+
+paths:
+  csv_scripts: "D:\\Gitrepo\\synthea-healthcare-data-engineering\\sql_scripts\\csv_scripts"
