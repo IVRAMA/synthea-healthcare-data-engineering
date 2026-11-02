@@ -1,4 +1,9 @@
 sources:
+  - name: json_data
+    database: HJB
+    schema: STAGING
+    tables:
+      - name: ENCOUNTER
   - name: csv_data
     database: HCB
     schema: STAGING
