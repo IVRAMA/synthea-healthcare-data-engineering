@@ -1,7 +1,7 @@
 {{ config (
     materialized='incremental',
     incremental_strategy='merge',
-    unique_key='ID',
+    unique_key='encounter_id',
     database='HEALTHCARE_ANALYTICS_NEW',
     schema='GOLD', 
     alias='encounter_summary'
@@ -25,7 +25,7 @@ WITH encounters AS (
         , base_encounter_cost
         , total_claim_cost
         , payer_coverage
-        , load_ts AS load_time
+        , SOURCE_LOAD_TS AS load_time
     FROM  {{ ref('fact_encounters') }}
 ),
 
