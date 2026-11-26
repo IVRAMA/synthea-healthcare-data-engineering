@@ -1,0 +1,123 @@
+version: 2
+
+models:
+  - name: AllergyIntolerance
+    tests:
+      - clinical_table_equality:
+          arguments:
+            compare_table: AllergyIntolerance
+  - name: CarePlan
+    tests:
+      - clinical_table_equality:
+          arguments:
+            compare_table: CarePlan
+  - name: CareTeam
+    tests:
+      - clinical_table_equality:
+          arguments:
+            compare_table: CareTeam
+  - name: Claim
+    tests:
+      - clinical_table_equality:
+          arguments:
+            compare_table: Claim
+  - name: Condition
+    tests:
+      - clinical_table_equality:
+          arguments:
+            compare_table: Condition
+  - name: Device
+    tests:
+      - clinical_table_equality:
+          arguments:
+            compare_table: Device
+  - name: DiagnosticReport
+    tests:
+      - clinical_table_equality:
+          arguments:
+            compare_table: DiagnosticReport
+  - name: DocumentReference
+    tests:
+      - clinical_table_equality:
+          arguments:
+            compare_table: DocumentReference
+  - name: Encounter
+    tests:
+      - clinical_table_equality:
+          arguments:
+            compare_table: Encounter
+  - name: ExplanationOfBenefit
+    tests:
+      - clinical_table_equality:
+          arguments:
+            compare_table: ExplanationOfBenefit
+  - name: ImagingStudy
+    tests:
+      - clinical_table_equality:
+          arguments:
+            compare_table: ImagingStudy
+  - name: Immunization
+    tests:
+      - clinical_table_equality:
+          arguments:
+            compare_table: Immunization
+  - name: Location
+    tests:
+      - clinical_table_equality:
+          arguments:
+            compare_table: Location
+  - name: Medication
+    tests:
+      - clinical_table_equality:
+          arguments:
+            compare_table: Medication
+  - name: MedicationAdministration
+    tests:
+      - clinical_table_equality:
+          arguments:
+            compare_table: MedicationAdministration
+  - name: MedicationRequest
+    tests:
+      - clinical_table_equality:
+          arguments:
+            compare_table: MedicationRequest
+  - name: Observation
+    tests:
+      - clinical_table_equality:
+          arguments:
+            compare_table: Observation
+  - name: Organization
+    tests:
+      - clinical_table_equality:
+          arguments:
+            compare_table: Organization
+  - name: Patient
+    tests:
+      - clinical_table_equality:
+          arguments:
+            compare_table: Patient
+  - name: Practitioner
+    tests:
+      - clinical_table_equality:
+          arguments:
+            compare_table: Practitioner
+  - name: PractitionerRole
+    tests:
+      - clinical_table_equality:
+          arguments:
+            compare_table: PractitionerRole
+  - name: Procedure
+    tests:
+      - clinical_table_equality:
+          arguments:
+            compare_table: Procedure
+  - name: Provenance
+    tests:
+      - clinical_table_equality:
+          arguments:
+            compare_table: Provenance
+  - name: SupplyDelivery
+    tests:
+      - clinical_table_equality:
+          arguments:
+            compare_table: SupplyDelivery

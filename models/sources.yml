@@ -1,9 +1,23 @@
+version: 2
+
 sources:
+  - name: dbt_data
+    database: HJB
+    schema: LOADING
+    tables:
+      - name: MASTER_JSON
+
   - name: json_data
     database: HJB
     schema: STAGING
     tables:
-      - name: ENCOUNTER
+      - name: Encounter
+        quoting:
+          identifier: true
+      - name: Patient
+        quoting:
+          identifier: true
+
   - name: csv_data
     database: HCB
     schema: STAGING

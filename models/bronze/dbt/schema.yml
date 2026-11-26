@@ -1,0 +1,17 @@
+version: 2
+
+models:
+  - name: dbt_bronze__patients
+    tests:
+      - clinical_table_equality:
+          arguments:
+            compare_database: HJB
+            compare_schema: BRONZE
+            compare_table: JSON_BRONZE_PATIENTS
+  - name: dbt_bronze__encounters
+    tests:
+      - clinical_table_equality:
+          arguments:
+            compare_database: HJB
+            compare_schema: BRONZE
+            compare_table: JSON_BRONZE_ENCOUNTERS

@@ -28,6 +28,6 @@ select
     , "reasonCode"[0]:"coding"[0]:"display"::string as REASONDESCRIPTION
     , LOAD_TS
 from 
-    {{ source('json_data', 'ENCOUNTER') }} 
+    {{ source('json_data', 'Encounter') }} 
 )
 select * from source
